@@ -3,7 +3,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import paper_list_collection, main_paper_with_context
+from utility.config import *
 
 def process():
     interface = MongoDBInterface()
@@ -25,7 +25,7 @@ def process2():
                                                'year':{'$gte':1998, '$lte':2003}})
 
     interface2 = MongoDBInterface()
-    interface2.setCollection(main_paper_with_context)
+    interface2.setCollection(main_paper_with_citation)
 
     for doc in cur:
         interface2.saveDocument(doc)

@@ -76,6 +76,7 @@ class PaperContextCrawler(object):
                 #print 'no more citing sentences'
             else:
                 res += tmp_res
+                fail = 0
             start += 10
             sleep_time = random.randint(0,100) % 3
             time.sleep(sleep_time)
