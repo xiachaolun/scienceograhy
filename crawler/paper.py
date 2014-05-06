@@ -72,7 +72,7 @@ class PaperCrawler(object):
             tmp_res = self._crawlCitingContext(url)
             if len(tmp_res) == 0:
                 fail += 1
-                print 'no more citing sentences'
+                #print 'no more citing sentences'
             else:
                 res += tmp_res
             start += 10
@@ -84,8 +84,11 @@ class PaperCrawler(object):
         return res
 
     def getCitingContext(self):
+        cnt =  0
         for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', 1)]):
-            print doc
+            cnt += 1
+            print cnt
+            #print doc
             res = self.crawlCitingContext(doc['_id'])
             doc['citing_sentences'] = res
             #pprint(res)
