@@ -11,9 +11,12 @@ from pprint import pprint
 import time
 import random
 
+
+from base_crawler import BaseCrawler
+
 # this crawler tends to ignore papers with non-English characters
 # only download citing context
-class PaperContextCrawler(object):
+class PaperContextCrawler(BaseCrawler):
     def __init__(self):
         self.mongodb_interface = MongoDBInterface()
         self.mongodb_interface.setCollection(main_paper_with_context)
@@ -76,10 +79,10 @@ class PaperContextCrawler(object):
                 #print 'no more citing sentences'
             else:
                 res += tmp_res
+                # rest
                 fail = 0
             start += 10
-            sleep_time = random.randint(0,100) % 3
-            time.sleep(sleep_time)
+            self._sleep('short')
 
             # for debug only
             #break
@@ -97,8 +100,7 @@ class PaperContextCrawler(object):
             doc['citing_sentences'] = res
             #pprint(res)
             self.mongodb_interface.updateDocument(doc)
-            sleep_time = random.randint(0, 100) % 10
-            time.sleep(sleep_time)
+            self._sleep('long')
 
 
 
