@@ -70,6 +70,48 @@ class PaperContextCrawler(BaseCrawler):
             self.mongodb_interface.updateDocument(doc)
             self._sleep('long')
 
+    def getCitationPaper2(self):
+        cnt =  0
+        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', -1)]):
+            cnt += 1
+            print cnt
+            #print doc
+            if len(doc.get('citing_papers', [])) > 0:
+                continue
+            res = self.crawlCitationPaper(doc['_id'])
+            doc['citing_papers'] = res
+            #pprint(res)
+            self.mongodb_interface.updateDocument(doc)
+            self._sleep('long')
+
+    def getCitationPaper3(self):
+        cnt =  0
+        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('_id', -1)]):
+            cnt += 1
+            print cnt
+            #print doc
+            if len(doc.get('citing_papers', [])) > 0:
+                continue
+            res = self.crawlCitationPaper(doc['_id'])
+            doc['citing_papers'] = res
+            #pprint(res)
+            self.mongodb_interface.updateDocument(doc)
+            self._sleep('long')
+
+    def getCitationPaper4(self):
+        cnt =  0
+        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('_id', 1)]):
+            cnt += 1
+            print cnt
+            #print doc
+            if len(doc.get('citing_papers', [])) > 0:
+                continue
+            res = self.crawlCitationPaper(doc['_id'])
+            doc['citing_papers'] = res
+            #pprint(res)
+            self.mongodb_interface.updateDocument(doc)
+            self._sleep('long')
+
 
 
 if __name__ == '__main__':
