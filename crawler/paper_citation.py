@@ -116,6 +116,16 @@ class PaperContextCrawler(BaseCrawler):
 
 if __name__ == '__main__':
     aa = PaperContextCrawler()
-    aa.getCitationPaper()
+    number = int(sys.argv[1])
+    assert number in [1,2,3,4]
+    if number == 1:
+        aa.getCitationPaper()
+    elif number == 2:
+        aa.getCitationPaper2()
+    elif number == 3:
+        aa.getCitationPaper3()
+    elif number == 4:
+        aa.getCitationPaper4()
+
     # aa._crawlCitationPaper('http://academic.research.microsoft.com/'
     #                        'Detail?entitytype=1&searchtype=5&id=762211&start=11&end=20')
