@@ -25,7 +25,7 @@ def process2():
                                                'year':{'$gte':1998, '$lte':2003}})
 
     interface2 = MongoDBInterface()
-    interface2.setCollection(main_paper_with_citation)
+    interface2.setCollection(main_paper_with_reference)
 
     for doc in cur:
         interface2.saveDocument(doc)
