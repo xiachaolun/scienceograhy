@@ -11,4 +11,8 @@ def prepcessCitingSentence(sentence):
         removed_non_ascii = removed_non_ascii.replace('  ', ' ')
     removed_non_ascii = removed_non_ascii.replace('[ ', '[')
     removed_non_ascii = removed_non_ascii.replace(' ]', ']')
-    return removed_non_ascii
+
+    removed_non_ascii = removed_non_ascii.replace('( ', '(')
+    removed_non_ascii = removed_non_ascii.replace(' )', ')')
+
+    return removed_non_ascii.strip()

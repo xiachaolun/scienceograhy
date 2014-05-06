@@ -3,7 +3,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import paper_list_collection
+from utility.config import paper_list_collection, main_paper
 
 def process():
     interface = MongoDBInterface()
@@ -18,6 +18,17 @@ def process():
         doc['_id'] = int(id)
         interface.saveDocument(doc)
 
+def process2():
+    interface = MongoDBInterface()
+    interface.setCollection(paper_list_collection)
+    cur = interface.getAllDocuments(condition={'total_citation':{'$gte':100},
+                                               'year':{'$gte':1998, '$lte':2003}})
+
+    interface2 = MongoDBInterface()
+    interface2.setCollection(main_paper)
+
+    for doc in cur:
+        interface2.saveDocument(doc)
 
 if __name__ == '__main__':
-    process()
+    process2()
