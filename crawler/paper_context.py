@@ -90,7 +90,7 @@ class PaperContextCrawler(BaseCrawler):
 
     def getCitingContext(self):
         cnt =  0
-        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', 1), ('_id', -1)]):
+        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', -1), ('_id', -1)]):
             cnt += 1
             print cnt
             #print doc

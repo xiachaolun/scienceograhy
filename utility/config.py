@@ -8,3 +8,5 @@ citing_paper = 'citing_paper'
 main_paper_with_context = 'main_paper_with_context' # with >= 100 citations published between 1998-2003
 main_paper_with_citation = 'main_paper_with_citation'
 main_paper_with_reference = 'main_paper_with_reference'
+main_paper_with_abstract = 'main_paper_with_abstract'
+other_paper_with_abstract = 'other_paper_with_abstract'
