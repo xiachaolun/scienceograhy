@@ -4,7 +4,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_paper
+from utility.config import main_paper_with_context
 from utility.tool import prepcessCitingSentence, nearlySameText
 from pprint import pprint
 
@@ -12,10 +12,11 @@ import time
 import random
 
 # this crawler tends to ignore papers with non-English characters
-class PaperCrawler(object):
+# only download citing context
+class PaperContextCrawler(object):
     def __init__(self):
         self.mongodb_interface = MongoDBInterface()
-        self.mongodb_interface.setCollection(main_paper)
+        self.mongodb_interface.setCollection(main_paper_with_context)
 
     def _crawlCitingContext(self, url):
         hmtl = pq(url)
@@ -76,7 +77,7 @@ class PaperCrawler(object):
             else:
                 res += tmp_res
             start += 10
-            sleep_time = random.randint(0,100) % 2
+            sleep_time = random.randint(0,100) % 3
             time.sleep(sleep_time)
 
             # for debug only
@@ -85,19 +86,23 @@ class PaperCrawler(object):
 
     def getCitingContext(self):
         cnt =  0
-        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', 1)]):
+        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', 1), ('_id', -1)]):
             cnt += 1
             print cnt
             #print doc
+            if len(doc.get('citing_sentences', [])) > 0:
+                continue
             res = self.crawlCitingContext(doc['_id'])
             doc['citing_sentences'] = res
             #pprint(res)
             self.mongodb_interface.updateDocument(doc)
+            sleep_time = random.randint(0, 100) % 10
+            time.sleep(sleep_time)
 
 
 
 if __name__ == '__main__':
-    pl = PaperCrawler()
+    pl = PaperContextCrawler()
     #pl._crawlCitingContext('http://academic.research.microsoft.com/Detail?entitytype=1&searchtype=7&id=1356162&start=2871&end=2880')
     pl.getCitingContext()
     #print plc._crawlCitingContext('http://academic.research.microsoft.com/Detail?entitytype=1&searchtype=7&id=781416&start=691&end=700')
