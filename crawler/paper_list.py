@@ -66,7 +66,7 @@ class PaperListCrawler(BaseCrawler):
         doc = {}
         doc['title'] = tuple[0]
         doc['year'] = tuple[1]
-        doc['url'] = tuple[2]
+        #doc['url'] = tuple[2]
         doc['total_citation'] = tuple[3]
         doc['field'] = tuple[4]
 
