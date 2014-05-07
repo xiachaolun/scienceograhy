@@ -8,7 +8,7 @@ from utility.tool import *
 
 import random
 
-from cralwer import *
+from crawler import *
 
 from redis import Redis
 from rq import Queue
@@ -64,5 +64,6 @@ def crawlPaperCitationWithRQ():
     ci.disconnect()
 
 if __name__ == '__main__':
+    #crawlCitationPaperWithRQ({'_id':155})
     crawlPaperCitationWithRQ()
     #crawlPaperCitation()
