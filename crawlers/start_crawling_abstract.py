@@ -4,13 +4,13 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_paper_with_abstract, main_paper_list, redis_server
+from utility.config import main_paper_with_abstract, main_paper_list, other_paper_with_abstract, redis_server
 from redis import Redis
 from rq import Queue
 
 from abstract_crawler import crawlAbstract
 
-from data_process.data_provider import getAllPaperId
+from data_process.data_provider import getOtherPaperId
 
 import random
 
@@ -69,12 +69,12 @@ def getMainPaperAbstractWithRQ():
 
     ci.disconnect()
 
-def getAllPaperAbstractWithRQ():
+def getOtherPaperAbstractWithRQ():
 
     ci = MongoDBInterface()
-    ci.setCollection(main_paper_with_abstract)
+    ci.setCollection(other_paper_with_abstract)
 
-    ids = getAllPaperId()
+    ids = getOtherPaperId()
 
     random.shuffle(ids)
 
@@ -98,4 +98,4 @@ def getAllPaperAbstractWithRQ():
 
 
 if __name__ == '__main__':
-    getAllPaperAbstractWithRQ()
+    getOtherPaperAbstractWithRQ()

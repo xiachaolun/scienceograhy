@@ -43,10 +43,10 @@ def _getMainPaperReferenceId():
             ids.add(id)
     return ids
 
-def getAllPaperId():
+def getOtherPaperId():
     data_set =  _getMainPaperContextId().union(_getMainPaperCitationId())\
         .union(_getMainPaperId()).union(_getMainPaperReferenceId())
     return [id for id in data_set]
 
 if __name__ == '__main__':
-    print len(getAllPaperId())
+    print len(getOtherPaperId())
