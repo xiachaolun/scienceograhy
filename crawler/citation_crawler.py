@@ -51,7 +51,7 @@ def crawlCitationPaper(doc_id):
     return [id for id in ids]
 
 
-def crawlCitationPaperWithRedis(doc):
+def crawlCitationPaperWithRQ(doc):
     doc_id = doc['_id']
     fail = 0
     start = 1

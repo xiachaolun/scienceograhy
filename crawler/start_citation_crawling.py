@@ -38,7 +38,7 @@ def crawlPaperCitation():
 
     ci.disconnect()
 
-def crawlPaperCitationWithRedis():
+def crawlPaperCitationWithRQ():
     # this method crawl citation in redis distributed way
     ci = MongoDBInterface()
     ci.setCollection(main_paper_with_citation)
@@ -59,9 +59,9 @@ def crawlPaperCitationWithRedis():
             continue
 
         paras = (doc)
-        q.enqueue_call(func=crawlCitationPaperWithRedis,args=(paras,),timeout=3600)
+        q.enqueue_call(func=crawlCitationPaperWithRQ,args=(paras,),timeout=3600)
 
     ci.disconnect()
 
 if __name__ == '__main__':
-    crawlPaperCitationWithRedis()
+    crawlPaperCitationWithRQ()
