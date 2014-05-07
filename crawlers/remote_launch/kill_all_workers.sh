@@ -2,7 +2,7 @@
 while read -r line
 do
     array+=($line)
-    done < instagram_gp_host.txt
+    done < api_host.txt
     for ((i=0; i < ${#array[*]}; i++))
     do
         echo "${array[i]}"
