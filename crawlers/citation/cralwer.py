@@ -12,7 +12,7 @@ import time
 import random
 
 
-# this crawler tends to ignore papers with non-English characters
+# this crawlers tends to ignore papers with non-English characters
 # only download citing context
 
 def _crawlCitationPaper(url):

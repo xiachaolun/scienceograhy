@@ -13,7 +13,7 @@ import random
 
 from base_crawler import BaseCrawler
 
-# this crawler tends to ignore papers with non-English characters
+# this crawlers tends to ignore papers with non-English characters
 # only download citing context
 class PaperReferenceCrawler(BaseCrawler):
     def __init__(self):

@@ -65,3 +65,4 @@ def crawlPaperCitationWithRQ():
 
 if __name__ == '__main__':
     crawlPaperCitationWithRQ()
+    #crawlPaperCitation()

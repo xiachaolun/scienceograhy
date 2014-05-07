@@ -9,7 +9,7 @@ from utility.tool import prepcessCitingSentence
 from base_crawler import BaseCrawler
 
 
-# this crawler tends to ignore papers with non-English characters
+# this crawlers tends to ignore papers with non-English characters
 class PaperListCrawler(BaseCrawler):
     def __init__(self):
 
