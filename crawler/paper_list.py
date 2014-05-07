@@ -4,17 +4,20 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import paper_list_collection
+from utility.config import paper_list, other_paper_list
+from utility.tool import prepcessCitingSentence
+from base_crawler import BaseCrawler
 
 
 # this crawler tends to ignore papers with non-English characters
-class PaperListCrawler(object):
+class PaperListCrawler(BaseCrawler):
     def __init__(self):
 
         self.mongodb_interface = MongoDBInterface()
-        self.mongodb_interface.setCollection(paper_list_collection)
+        #self.mongodb_interface.setCollection(paper_list)
+        self.mongodb_interface.setCollection(other_paper_list)
 
-    def _crawl(self):
+    def _crawl(self, domain):
         # url = 'http://academic.research.microsoft.com/RankList?entitytype=1&topDomainID=2&subDomainID=7&' \
         #       'last=0&start=1&end=100'
         html = pq(self.url)
@@ -32,11 +35,18 @@ class PaperListCrawler(object):
 
             # example: Classification and Regression Trees (1984)
             title = tmp[0:len(tmp) - 7].strip()
+            title = prepcessCitingSentence(title)
+
             year = tmp[len(tmp) - 5 : -1].strip()
 
             total_citation_count = item('td').filter('.staticOrderCol').text()
+
+            # here we ignore papers with less than 100 citations
+            if int(total_citation_count) < 100:
+                continue
+
             try:
-                tuple = [str(title), int(year), str(publication_url), int(total_citation_count)]
+                tuple = [str(title), int(year), str(publication_url), int(total_citation_count), domain]
                 cnt += 1
                 self._save_to_db(tuple)
                 #print tuple
@@ -58,40 +68,35 @@ class PaperListCrawler(object):
         doc['year'] = tuple[1]
         doc['url'] = tuple[2]
         doc['total_citation'] = tuple[3]
-        doc['field'] ='IR'
+        doc['field'] = tuple[4]
 
         tmp = doc['url'].split('/')
         doc['_id'] = int(tmp[2].strip())
 
         #print doc
-
         self.mongodb_interface.saveDocument(doc)
 
     def crawl(self):
-        start = 41501
-        failed = 0
-        while failed < 3:
-            end = start + 99
-            # data mining
-            # self.url = 'http://academic.research.microsoft.com/' \
-            #            'RankList?entitytype=1&topDomainID=2&subDomainID=7&last=0&start=%d&end=%d' % (start, end)
+        for domain in xrange(1, 25):
+            start = 1
+            failed = 0
+            print 'start crawling papers from domain %d' % domain
+            while failed < 3:
+                end = start + 99
+                # all
+                self.url = 'http://academic.research.microsoft.com/' \
+                           'RankList?entitytype=1&topDomainID=2&subDomainID=%d&last=0&start=%d&end=%d' % \
+                           (domain, start, end)
 
-            # machine learning
-            # self.url = 'http://academic.research.microsoft.com/' \
-            #            'RankList?entitytype=1&topDomainID=2&subDomainID=6&last=0&start=%d&end=%d' % (start, end)
+                print self.url
+                if not self._crawl(domain):
+                    failed += 1
+                else:
+                    failed = 0
 
-            # information retrieval
-            self.url = 'http://academic.research.microsoft.com/' \
-                       'RankList?entitytype=1&topDomainID=2&subDomainID=8&last=0&start=%d&end=%d' % (start, end)
-
-            print self.url
-            if not self._crawl():
-                failed += 1
-            else:
-                failed = 0
-
-            # enter into next iteration
-            start += 100
+                # enter into next iteration
+                start += 100
+                self._sleep('short')
 
 if __name__ == '__main__':
     plc = PaperListCrawler()

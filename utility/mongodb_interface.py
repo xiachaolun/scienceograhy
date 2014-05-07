@@ -79,7 +79,7 @@ class MongoDBInterface(object):
 
 def test():
     mi = MongoDBInterface()
-    mi.setCollection(config.paper_list_collection)
+    mi.setCollection(config.paper_list)
     print mi.getAllDocuments().count()
 
 if __name__ == '__main__':

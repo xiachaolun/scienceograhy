@@ -7,7 +7,7 @@ from utility.config import *
 
 def process():
     interface = MongoDBInterface()
-    interface.setCollection(paper_list_collection)
+    interface.setCollection(paper_list)
     cur = interface.getAllDocuments()
     for doc in cur:
         id = str(doc['_id'])
@@ -20,7 +20,7 @@ def process():
 
 def process2():
     interface = MongoDBInterface()
-    interface.setCollection(paper_list_collection)
+    interface.setCollection(paper_list)
     cur = interface.getAllDocuments(condition={'total_citation':{'$gte':100},
                                                'year':{'$gte':1998, '$lte':2003}})
 
