@@ -20,6 +20,10 @@ class PaperContextCrawler(BaseCrawler):
         self.mongodb_interface = MongoDBInterface()
         self.mongodb_interface.setCollection(main_paper_with_citation)
 
+        self.source_interface = MongoDBInterface()
+        self.source_interface.setCollection(main_paper_list)
+
+
     def _crawlCitationPaper(self, url):
         hmtl = pq(url)
         ids = []
@@ -58,74 +62,23 @@ class PaperContextCrawler(BaseCrawler):
 
     def getCitationPaper(self):
         cnt =  0
-        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', 1), ('_id', -1)]):
-            cnt += 1
-            print cnt
-            #print doc
+
+        ids = [id for id in self.mongodb_interface.getAllDocuments(fields_to_select=['_id'])]
+        random.shuffle(ids)
+
+        for id in ids:
+            doc = self.mongodb_interface.getOneDocument(condition={'_id': id})
             if len(doc.get('citing_papers', [])) > 0:
                 continue
-            res = self.crawlCitationPaper(doc['_id'])
+            res = self.crawlCitationPaper(id)
             doc['citing_papers'] = res
             #pprint(res)
             self.mongodb_interface.updateDocument(doc)
-            self._sleep('long')
-
-    def getCitationPaper2(self):
-        cnt =  0
-        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('total_citation', -1)]):
-            cnt += 1
-            print cnt
-            #print doc
-            if len(doc.get('citing_papers', [])) > 0:
-                continue
-            res = self.crawlCitationPaper(doc['_id'])
-            doc['citing_papers'] = res
-            #pprint(res)
-            self.mongodb_interface.updateDocument(doc)
-            self._sleep('long')
-
-    def getCitationPaper3(self):
-        cnt =  0
-        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('_id', -1)]):
-            cnt += 1
-            print cnt
-            #print doc
-            if len(doc.get('citing_papers', [])) > 0:
-                continue
-            res = self.crawlCitationPaper(doc['_id'])
-            doc['citing_papers'] = res
-            #pprint(res)
-            self.mongodb_interface.updateDocument(doc)
-            self._sleep('long')
-
-    def getCitationPaper4(self):
-        cnt =  0
-        for doc in self.mongodb_interface.getAllDocuments(sorting_info=[('_id', 1)]):
-            cnt += 1
-            print cnt
-            #print doc
-            if len(doc.get('citing_papers', [])) > 0:
-                continue
-            res = self.crawlCitationPaper(doc['_id'])
-            doc['citing_papers'] = res
-            #pprint(res)
-            self.mongodb_interface.updateDocument(doc)
-            self._sleep('long')
-
-
+            self._sleep('short')
 
 if __name__ == '__main__':
     aa = PaperContextCrawler()
-    number = int(sys.argv[1])
-    assert number in [1,2,3,4]
-    if number == 1:
-        aa.getCitationPaper()
-    elif number == 2:
-        aa.getCitationPaper2()
-    elif number == 3:
-        aa.getCitationPaper3()
-    elif number == 4:
-        aa.getCitationPaper4()
+    aa.getCitationPaper()
 
     # aa._crawlCitationPaper('http://academic.research.microsoft.com/'
     #                        'Detail?entitytype=1&searchtype=5&id=762211&start=11&end=20')

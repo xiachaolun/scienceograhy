@@ -4,7 +4,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import paper_list, other_paper_list
+from utility.config import *
 from utility.tool import prepcessCitingSentence
 from base_crawler import BaseCrawler
 
@@ -15,7 +15,7 @@ class PaperListCrawler(BaseCrawler):
 
         self.mongodb_interface = MongoDBInterface()
         #self.mongodb_interface.setCollection(paper_list)
-        self.mongodb_interface.setCollection(other_paper_list)
+        self.mongodb_interface.setCollection(all_paper_list)
 
     def _crawl(self, domain):
         # url = 'http://academic.research.microsoft.com/RankList?entitytype=1&topDomainID=2&subDomainID=7&' \

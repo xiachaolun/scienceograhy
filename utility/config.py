@@ -7,8 +7,8 @@ db_port = 27017
 db_name = 'scienceography'
 
 # collections
-other_paper_list = 'other_paper_meta_data'
-paper_list = 'paper_meta_data'
+main_paper_list = 'main_paper_list' # from all domain year = 2000, citation >= 100
+all_paper_list = 'all_paper_list' # covers all domains
 citing_paper = 'citing_paper'
 main_paper_with_context = 'main_paper_with_context' # with >= 100 citations published between 1998-2003
 main_paper_with_citation = 'main_paper_with_citation'
