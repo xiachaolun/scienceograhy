@@ -8,7 +8,7 @@ from rq import Queue, Worker, Connection
 from redis import Redis
 
 from utility.config import redis_server
-from citing_context.crawler import *
+from citing_context.crawler import crawlCitingContext
 
 if __name__ == '__main__':
     redis_conn = Redis(redis_server)
