@@ -70,7 +70,7 @@ class PaperListCrawler(BaseCrawler):
         doc['total_citation'] = tuple[3]
         doc['field'] = tuple[4]
 
-        tmp = doc['url'].split('/')
+        tmp = tuple[2].split('/')
         doc['_id'] = int(tmp[2].strip())
 
         #print doc
