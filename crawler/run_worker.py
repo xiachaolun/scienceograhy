@@ -3,6 +3,8 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 
+from citation.crawler import crawlCitationPaperWithRedis
+
 from rq import Queue, Worker, Connection
 from redis import Redis
 
