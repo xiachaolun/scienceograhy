@@ -48,7 +48,7 @@ def crawCitingContextGivenUrl(url):
             try:
                 citing_author = str(tmp.eq(0).attr('href')).split('/')[2]
                 citing_paper = str(tmp.eq(1).attr('href')).split('/')[1]
-                citing_info.append([citing_sentences, citing_author, citing_paper])
+                citing_info.append([citing_sentences, int(citing_author), int(citing_paper)])
             except Exception, e:
                 print e
 
