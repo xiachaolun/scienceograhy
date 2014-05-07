@@ -8,7 +8,7 @@ from utility.config import main_paper_with_abstract, main_paper_list, other_pape
 from redis import Redis
 from rq import Queue
 
-from abstract_crawler import crawlAbstract
+from abstract_crawler import crawlMainPaperAbstract, crawlOtherPaperAbstract
 
 from data_process.data_provider import getOtherPaperId
 
@@ -37,7 +37,7 @@ def getMainPaperAbstract():
             print '%d is already there' % doc['_id']
             continue
 
-        crawlAbstract(doc)
+        crawlMainPaperAbstract(doc)
 
     ci.disconnect()
 
@@ -65,7 +65,7 @@ def getMainPaperAbstractWithRQ():
             continue
 
         paras = (doc)
-        q.enqueue_call(func=crawlAbstract,args=(paras,),timeout=3600)
+        q.enqueue_call(func=crawlMainPaperAbstract,args=(paras,),timeout=3600)
 
     ci.disconnect()
 
@@ -91,7 +91,7 @@ def getOtherPaperAbstractWithRQ():
             continue
 
         paras = (doc)
-        q.enqueue_call(func=crawlAbstract,args=(paras,),timeout=3600)
+        q.enqueue_call(func=crawlOtherPaperAbstract,args=(paras,),timeout=3600)
 
     ci.disconnect()
 

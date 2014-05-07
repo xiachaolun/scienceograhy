@@ -4,7 +4,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_paper_with_abstract
+from utility.config import main_paper_with_abstract, other_paper_with_abstract
 from utility.tool import prepcessCitingSentence, randomSleep
 from pprint import pprint
 
@@ -82,8 +82,14 @@ def crawlAbstractGivenPaperId(paper_id):
 
     return res
 
-def crawlAbstract(paper):
+def crawlMainPaperAbstract(paper):
     paper['meta'] = crawlAbstractGivenPaperId(paper['_id'])
     interface = MongoDBInterface()
     interface.setCollection(main_paper_with_abstract)
+    interface.saveDocument(paper)
+
+def crawlOtherPaperAbstract(paper):
+    paper['meta'] = crawlAbstractGivenPaperId(paper['_id'])
+    interface = MongoDBInterface()
+    interface.setCollection(other_paper_with_abstract)
     interface.saveDocument(paper)
