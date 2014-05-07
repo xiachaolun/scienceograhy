@@ -64,4 +64,4 @@ def getCitingContextWithRQ():
     ci.disconnect()
 
 if __name__ == '__main__':
-    getCitingContext()
+    getCitingContextWithRQ()
