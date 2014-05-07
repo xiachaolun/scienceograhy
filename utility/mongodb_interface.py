@@ -1,7 +1,7 @@
 ##########
 # Author: Chaolun Xia, 2013-Jan-09#
 #
-# A basic and private interface to connect and test the mongodb
+# A basic and private interface to connect and citation the mongodb
 #
 ##########
 #Edited by: (Please write your name here)#
