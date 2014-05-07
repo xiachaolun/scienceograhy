@@ -44,8 +44,9 @@ def _getMainPaperReferenceId():
     return ids
 
 def getAllPaperId():
-    # 255545
-    print len(_getMainPaperContextId().union(_getMainPaperCitationId()))
+    data_set =  _getMainPaperContextId().union(_getMainPaperCitationId())\
+        .union(_getMainPaperId()).union(_getMainPaperReferenceId())
+    return [id for id in data_set]
 
 if __name__ == '__main__':
-    getAllPaperId()
+    print len(getAllPaperId())

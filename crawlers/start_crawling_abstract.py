@@ -10,6 +10,8 @@ from rq import Queue
 
 from abstract_crawler import crawlAbstract
 
+from data_process.data_provider import getAllPaperId
+
 import random
 
 def getMainPaperAbstract():
@@ -67,5 +69,33 @@ def getMainPaperAbstractWithRQ():
 
     ci.disconnect()
 
+def getAllPaperAbstractWithRQ():
+
+    ci = MongoDBInterface()
+    ci.setCollection(main_paper_with_abstract)
+
+    ids = getAllPaperId()
+
+    random.shuffle(ids)
+
+    redis_conn = Redis(redis_server)
+    q = Queue(connection=redis_conn)
+
+    for id in ids:
+
+        doc = {}
+        doc['_id'] = id
+        # if it is already in the db
+        if ci.getOneDocument(condition={'_id': doc['_id']}) is not None:
+            print '%d is already there' % doc['_id']
+            continue
+
+        paras = (doc)
+        q.enqueue_call(func=crawlAbstract,args=(paras,),timeout=3600)
+
+    ci.disconnect()
+
+
+
 if __name__ == '__main__':
-    getMainPaperAbstract()
+    getAllPaperAbstractWithRQ()
