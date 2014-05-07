@@ -5,12 +5,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
 from utility.config import *
-from utility.tool import prepcessCitingSentence
-from base_crawler import BaseCrawler
+from utility.tool import *
 
 
 # this crawlers tends to ignore papers with non-English characters
-class PaperListCrawler(BaseCrawler):
+class PaperListCrawler(object):
     def __init__(self):
 
         self.mongodb_interface = MongoDBInterface()
@@ -96,7 +95,7 @@ class PaperListCrawler(BaseCrawler):
 
                 # enter into next iteration
                 start += 100
-                self._sleep('short')
+                randomSleep()
 
 if __name__ == '__main__':
     plc = PaperListCrawler()
