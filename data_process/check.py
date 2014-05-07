@@ -19,7 +19,7 @@ def checkContext():
     ci.setCollection(main_paper_with_context)
 
     for doc in ci.getAllDocuments():
-        print len(doc['citing_sentences'])
+        print len(doc['citing_sentences']), doc['_id']
 
 
 if __name__ == '__main__':
