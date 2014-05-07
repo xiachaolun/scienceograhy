@@ -15,3 +15,5 @@ main_paper_with_citation = 'main_paper_with_citation'
 main_paper_with_reference = 'main_paper_with_reference'
 main_paper_with_abstract = 'main_paper_with_abstract'
 other_paper_with_abstract = 'other_paper_with_abstract'
+
+redis_server = 'tall2'

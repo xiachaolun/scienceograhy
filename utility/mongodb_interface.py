@@ -77,6 +77,9 @@ class MongoDBInterface(object):
             document = document.toDict()
         self._collection.update({'_id': document['_id']}, document, True)
 
+    def disconnect(self):
+        self._connection.disconnect()
+
 def test():
     mi = MongoDBInterface()
     mi.setCollection(config.paper_list)
