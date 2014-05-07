@@ -98,4 +98,5 @@ def getOtherPaperAbstractWithRQ():
 
 
 if __name__ == '__main__':
+    getMainPaperAbstractWithRQ()
     getOtherPaperAbstractWithRQ()
