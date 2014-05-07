@@ -64,4 +64,4 @@ def getReferenceWithRQ():
     ci.disconnect()
 
 if __name__ == '__main__':
-    getReference()
+    getReferenceWithRQ()
