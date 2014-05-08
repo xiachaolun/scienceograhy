@@ -7,6 +7,9 @@ from utility.mongodb_interface import MongoDBInterface
 from utility.config import main_author_list
 from utility.tool import hasNextPage, randomSleep, prepcessCitingSentence
 
+from pprint import pprint
+
+import re
 
 def _parseAuthorHistory(citation_hist):
     last_year = 1800
@@ -87,20 +90,28 @@ def _crawlAuthorInfoGivenId(author_id):
     ts = author_card('script').text()
     ts = ts.replace('"', '')
     citation_hist = []
-    for text in ts.split('},{'):
-        if 'citations' in text and 'year' in text and 'm_Visible:true' in text:
-            citation_hist.append(text)
+    # for text in ts.split('},{'):
+    #     if 'citations' in text and 'year' in text and 'm_Visible:true' in text and 'YTD' not in text:
+    #         citation_hist.append(text)
+
+    for text in re.findall('{m_x:.*?,m_y:.*?,m_text:citations.*?}', ts):
+        if 'publication' not in text:
+            citation_hist.append(text.strip('{} '))
 
     publication_hist = []
-    for text in ts.split('},{'):
-        if 'publications' in text and 'year' in text and 'm_Visible:true' in text:
-            publication_hist.append(text)
+    for text in re.findall('{m_x:.*?,m_y:.*?,m_text:publications.*?}', ts):
+        if 'citation' not in text:
+            publication_hist.append(text.strip('{} '))
+
+
+    # for text in ts.split('},{'):
+    #     if 'publications' in text and 'year' in text and 'm_Visible:true' in text and 'YTD' not in text:
+    #         publication_hist.append(text)
 
     publication_time_series = _parseAuthorHistory(publication_hist)
     citation_time_series = _parseAuthorHistory(citation_hist)
 
     publication_paper_ids = _crawlAuthorPublication(author_id)
-    #publication_paper_ids = []
 
     author_info = {}
     author_info['_id'] = author_id
@@ -134,4 +145,4 @@ def crawlAndSaveAuthorInfo(author_id):
     ai.disconnect()
 
 if __name__ == '__main__':
-    print _crawlAuthorInfoGivenId(117894)
+    _crawlAuthorInfoGivenId(1566039)
