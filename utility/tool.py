@@ -1,3 +1,4 @@
+from pyquery import PyQuery as pq
 from ngram import NGram
 import random
 import time
@@ -23,3 +24,11 @@ def prepcessCitingSentence(sentence):
 def randomSleep():
     sec = random.randint(0, 100) % 2 + 1
     time.sleep(sec)
+
+
+def hasNextPage(url):
+    html = pq(url)
+    text = html('a').filter('.nextprev').filter(lambda i: 'Go to Next Page' in str(pq(this).attr('title'))).text()
+    return text == 'Next'
+    #<a id="ctl00_MainContent_ObjectList_Next" title="Go to Next Page" class="nextprev"
+    # href="/Detail?entitytype=2&amp;searchtype=2&amp;id=1790648&amp;start=101&amp;end=200">Next</a>

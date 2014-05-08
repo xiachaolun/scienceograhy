@@ -44,9 +44,18 @@ def _getMainPaperReferenceId():
     return ids
 
 def getOtherPaperId():
-    data_set =  _getMainPaperContextId().union(_getMainPaperCitationId())\
+    data_set = _getMainPaperContextId().union(_getMainPaperCitationId())\
         .union(_getMainPaperId()).union(_getMainPaperReferenceId())
     return [id for id in data_set]
 
+def getAllAuthorId():
+    mi = MongoDBInterface()
+    mi.setCollection(main_paper_with_abstract)
+    author_set = set()
+    for paper in mi.getAllDocuments():
+        for author in paper['meta']['authors']:
+            author_set.add(author)
+    return [author for author in author_set]
+
 if __name__ == '__main__':
-    print len(getOtherPaperId())
+    print len(getAllAuthorId())

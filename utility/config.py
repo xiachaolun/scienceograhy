@@ -15,5 +15,6 @@ main_paper_with_citation = 'main_paper_with_citation'
 main_paper_with_reference = 'main_paper_with_reference'
 main_paper_with_abstract = 'main_paper_with_abstract'
 other_paper_with_abstract = 'other_paper_with_abstract'
+main_author_list = 'main_author_list'
 
 redis_server = 'tall2'
