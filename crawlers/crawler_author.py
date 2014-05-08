@@ -5,27 +5,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
 from utility.config import main_author_list
-from utility.tool import hasNextPage, randomSleep, prepcessCitingSentence
+from utility.tool import hasNextPage, randomSleep, prepcessCitingSentence, parseTimeSeriesData
 
 from pprint import pprint
 
 import re
-
-def _parseAuthorHistory(citation_hist):
-    last_year = 1800
-    last_citation = 0
-    res = {}
-    for rec in citation_hist:
-        tmp = rec.split(',')
-        year = int(tmp[0].split(':')[1])
-        citation = int(tmp[1].split(':')[1])
-        if year <= last_year:
-            break
-        else:
-            res[str(year)] = citation - last_citation
-            last_year = year
-            last_citation = citation
-    return res
 
 def _crawlPaperGivenUrl(url):
     # this method is equivalent to crawlReferenceGivenUrl
@@ -103,12 +87,12 @@ def _crawlAuthorInfoGivenId(author_id):
     #     if 'citations' in text and 'year' in text and 'm_Visible:true' in text and 'YTD' not in text:
     #         citation_hist.append(text)
 
-    for text in re.findall('{m_x:.*?,m_y:.*?,m_text:citations.*?}', ts):
+    for text in re.findall('{m_x:.*?,m_y:.*?,m_text:citation.*?}', ts):
         if 'publication' not in text:
             citation_hist.append(text.strip('{} '))
 
     publication_hist = []
-    for text in re.findall('{m_x:.*?,m_y:.*?,m_text:publications.*?}', ts):
+    for text in re.findall('{m_x:.*?,m_y:.*?,m_text:publication.*?}', ts):
         if 'citation' not in text:
             publication_hist.append(text.strip('{} '))
 
@@ -117,8 +101,8 @@ def _crawlAuthorInfoGivenId(author_id):
     #     if 'publications' in text and 'year' in text and 'm_Visible:true' in text and 'YTD' not in text:
     #         publication_hist.append(text)
 
-    publication_time_series = _parseAuthorHistory(publication_hist)
-    citation_time_series = _parseAuthorHistory(citation_hist)
+    publication_time_series = parseTimeSeriesData(publication_hist)
+    citation_time_series = parseTimeSeriesData(citation_hist)
 
     publication_paper_ids = _crawlAuthorPublication(author_id)
 

@@ -32,3 +32,20 @@ def hasNextPage(url):
     return text == 'Next'
     #<a id="ctl00_MainContent_ObjectList_Next" title="Go to Next Page" class="nextprev"
     # href="/Detail?entitytype=2&amp;searchtype=2&amp;id=1790648&amp;start=101&amp;end=200">Next</a>
+
+def parseTimeSeriesData(time_series):
+    # this method parses the JavaScript code nested in the HTML
+    last_year = 1800
+    last_value = 0
+    res = {}
+    for rec in time_series:
+        tmp = rec.split(',')
+        year = int(tmp[0].split(':')[1])
+        value = int(tmp[1].split(':')[1])
+        if year <= last_year:
+            break
+        else:
+            res[str(year)] = value - last_value
+            last_year = year
+            last_value = value
+    return res

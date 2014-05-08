@@ -8,7 +8,7 @@ from utility.config import main_paper_with_abstract, main_paper_list, other_pape
 from redis import Redis
 from rq import Queue
 
-from abstract_crawler import crawlMainPaperAbstract, crawlOtherPaperAbstract
+from crawler_abstract import crawlMainPaperAbstract, crawlOtherPaperAbstract
 
 from data_process.data_provider import getOtherPaperId
 

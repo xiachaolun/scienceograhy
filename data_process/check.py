@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
 from utility.config import *
-
+from data_provider import getOtherPaperId
 
 def checkCitation():
     ci = MongoDBInterface()
@@ -21,7 +21,15 @@ def checkContext():
     for doc in ci.getAllDocuments():
         print len(doc['citing_sentences']), doc['_id']
 
+def checkAbstract():
+    ids = getOtherPaperId()
+    ci = MongoDBInterface()
+    ci.setCollection(other_paper_with_abstract)
+    for id in ids:
+        if ci.getOneDocument({'_id':id}) is None:
+            print id
 
 if __name__ == '__main__':
-    checkCitation()
-    checkContext()
+    checkAbstract()
+    # checkCitation()
+    # checkContext()

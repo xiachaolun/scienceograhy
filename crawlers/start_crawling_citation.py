@@ -9,7 +9,7 @@ from utility.tool import *
 
 import random
 
-from citation_crawler import crawlCitationPaper
+from crawler_citation import crawlCitationPaper
 
 from redis import Redis
 from rq import Queue

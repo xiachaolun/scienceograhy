@@ -8,7 +8,7 @@ from utility.config import main_author_list, redis_server
 from redis import Redis
 from rq import Queue
 
-from author_crawler import crawlAndSaveAuthorInfo
+from crawler_author import crawlAndSaveAuthorInfo
 
 from data_process.data_provider import getAllAuthorId
 

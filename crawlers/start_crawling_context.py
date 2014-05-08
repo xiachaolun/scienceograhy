@@ -8,7 +8,7 @@ from utility.tool import *
 
 import random
 
-from context_crawler import crawlCitingContext
+from crawler_context import crawlCitingContext
 
 from redis import Redis
 from rq import Queue

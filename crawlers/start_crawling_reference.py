@@ -10,7 +10,7 @@ from redis import Redis
 from rq import Queue
 import random
 
-from reference_crawler import crawlReferencePaper
+from crawler_reference import crawlReferencePaper
 
 def getReference():
 

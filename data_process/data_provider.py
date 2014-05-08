@@ -5,6 +5,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from utility.mongodb_interface import MongoDBInterface
 from utility.config import *
 
+from pprint import pprint
+
 
 def _getMainPaperId():
     mi = MongoDBInterface()
@@ -57,5 +59,23 @@ def getAllAuthorId():
             author_set.add(author)
     return [author for author in author_set]
 
+def getAllVenueId():
+    venue_ids = set()
+    mi = MongoDBInterface()
+    mi.setCollection(main_paper_with_abstract)
+
+    for doc in mi.getAllDocuments(fields_to_select=['meta.venue_id']):
+        venue_ids.add(doc['meta']['venue_id'])
+
+    mi.disconnect()
+
+    mi = MongoDBInterface()
+    mi.setCollection(other_paper_with_abstract)
+    for doc in mi.getAllDocuments(fields_to_select=['meta.venue_id']):
+        venue_ids.add(doc['meta']['venue_id'])
+    mi.disconnect()
+    pprint(venue_ids)
+
+
 if __name__ == '__main__':
-    print len(getAllAuthorId())
+    getAllVenueId()
