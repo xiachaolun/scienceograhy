@@ -121,12 +121,15 @@ def _crawlAuthorInfoGivenId(author_id):
     return author_info
 
 def crawlAndSaveAuthorInfo(author_id):
-    author_info = _crawlAuthorInfoGivenId(author_id)
-
     ai = MongoDBInterface()
     ai.setCollection(main_author_list)
 
-    ai.saveDocument(author_info)
+    try:
+        author_info = _crawlAuthorInfoGivenId(author_id)
+    except:
+        ai.saveDocument({'_id':author_id})
+
+    #ai.saveDocument(author_info)
 
     ai.disconnect()
 
