@@ -84,8 +84,17 @@ def _crawlAuthorInfoGivenId(author_id):
     citation_number = int(citation_number)
 
     tmp = author_card('a').filter(lambda i: 'VisualExplore' in str(pq(this).attr('href')))
-    coauthor_number = int(str(tmp.eq(0).text().split()[0]).strip())
-    citing_author_number = int(str(tmp.eq(1).text().split()[0]).strip())
+    try:
+        coauthor_number = int(str(tmp.eq(0).text().split()[0]).strip())
+    except:
+        print 'no coauthor information'
+        coauthor_number = -1
+
+    try:
+        citing_author_number = int(str(tmp.eq(1).text().split()[0]).strip())
+    except:
+        print 'no citing author information'
+        citing_author_number = -1
 
     ts = author_card('script').text()
     ts = ts.replace('"', '')
@@ -132,17 +141,27 @@ def _crawlAuthorInfoGivenId(author_id):
     return author_info
 
 def crawlAndSaveAuthorInfo(author_id):
+    author_info = _crawlAuthorInfoGivenId(author_id)
+
     ai = MongoDBInterface()
     ai.setCollection(main_author_list)
-
-    try:
-        author_info = _crawlAuthorInfoGivenId(author_id)
-    except:
-        ai.saveDocument({'_id':author_id})
-
-    #ai.saveDocument(author_info)
-
+    ai.saveDocument(author_info)
     ai.disconnect()
 
+# for debug
+# def crawlAndSaveAuthorInfo(author_id):
+#     ai = MongoDBInterface()
+#     ai.setCollection(main_author_list)
+#
+#     try:
+#         author_info = _crawlAuthorInfoGivenId(author_id)
+#     except:
+#         ai.saveDocument({'_id':author_id})
+#
+#     #ai.saveDocument(author_info)
+#
+#     ai.disconnect()
+
+
 if __name__ == '__main__':
-    _crawlAuthorInfoGivenId(1566039)
+    _crawlAuthorInfoGivenId(49963643)
