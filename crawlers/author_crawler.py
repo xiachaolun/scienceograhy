@@ -4,8 +4,8 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_paper_with_context, main_author_list
-from utility.tool import hasNextPage, randomSleep
+from utility.config import main_author_list
+from utility.tool import hasNextPage, randomSleep, prepcessCitingSentence
 
 
 def _parseAuthorHistory(citation_hist):
@@ -19,7 +19,7 @@ def _parseAuthorHistory(citation_hist):
         if year <= last_year:
             break
         else:
-            res[year] = citation - last_citation
+            res[str(year)] = citation - last_citation
             last_year = year
             last_citation = citation
     return res
@@ -62,12 +62,17 @@ def _crawlAuthorInfoGivenId(author_id):
     author_card = html('div').filter('.author-card')
     # print author_card
     author_name = author_card('span').filter(lambda i: '_authorName' in str(pq(this).attr('id'))).text()
-    author_name = unicode(author_name)
+    author_name = str(prepcessCitingSentence(author_name))
 
     organization_href = author_card('a').filter(lambda i: '_affiliation' in str(pq(this).attr('id'))).attr('href')
     organization_name = author_card('a').filter(lambda i: '_affiliation' in str(pq(this).attr('id'))).attr('title')
-    organization_name = unicode(organization_name)
-    organization_id = int(organization_href.strip().split('/')[-2])
+    try:
+        organization_name = str(prepcessCitingSentence(organization_name))
+        organization_id = int(organization_href.strip().split('/')[-2])
+    except:
+        print 'has no organization'
+        organization_name = ''
+        organization_id = -1
 
     publication_number = author_card('a').filter(lambda i: 'publication' in str(pq(this).attr('id'))).text()
     publication_number = int(publication_number)
@@ -95,6 +100,7 @@ def _crawlAuthorInfoGivenId(author_id):
     citation_time_series = _parseAuthorHistory(citation_hist)
 
     publication_paper_ids = _crawlAuthorPublication(author_id)
+    #publication_paper_ids = []
 
     author_info = {}
     author_info['_id'] = author_id
@@ -125,4 +131,4 @@ def crawlAndSaveAuthorInfo(author_id):
     ai.disconnect()
 
 if __name__ == '__main__':
-    print _crawlAuthorInfoGivenId(594572)
+    print _crawlAuthorInfoGivenId(117894)
