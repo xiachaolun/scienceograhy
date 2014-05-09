@@ -42,4 +42,4 @@ def getVenueInfoWithRQ():
     ci.disconnect()
 
 if __name__ == '__main__':
-    getVenueInfoWithRQ()
+    getVenueInfo()
