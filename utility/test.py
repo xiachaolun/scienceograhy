@@ -1,6 +1,7 @@
 import psutil
 
-cmdline = '/grad/users/cx28/scienceograhy/crawlers/run_worker.py'
+
+cmdline = '/grad/users/cx28/scienceograhy/'
 
 cnt = 0
 for proc in psutil.process_iter():
