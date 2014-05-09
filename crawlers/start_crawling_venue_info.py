@@ -8,6 +8,8 @@ from utility.config import all_venue_with_info, redis_server
 from redis import Redis
 from rq import Queue
 
+import random
+
 from crawler_venue import crawlAndSaveVenueInfo
 
 def getVenueInfo():
@@ -18,6 +20,8 @@ def getVenueInfo():
     ids = []
     for doc in ci.getAllDocuments(fields_to_select=['_id']):
         ids.append(doc['_id'])
+
+    random.shuffle(ids)
 
     for venue_id in ids:
         crawlAndSaveVenueInfo(venue_id)
@@ -32,6 +36,8 @@ def getVenueInfoWithRQ():
     ids = []
     for doc in ci.getAllDocuments(fields_to_select=['_id']):
         ids.append(doc['_id'])
+
+    random.shuffle(ids)
 
     redis_conn = Redis(redis_server)
     q = Queue(connection=redis_conn)
