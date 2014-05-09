@@ -68,6 +68,7 @@ def crawlAndSaveVenueInfo(venue_id):
 
     # already crawled
     if 'publication_count_time_series' in old_venue.keys():
+        print 'info is already crawled: %s' % old_venue['_id']
         return
 
     new_venue = _crawlVenueInfoGivenId(venue_id)
@@ -79,7 +80,7 @@ def crawlAndSaveVenueInfo(venue_id):
     ai.disconnect()
 
 if __name__ == '__main__':
-    pprint(crawlAndSaveVenueInfo('Journal/20810'))
+    crawlAndSaveVenueInfo('Journal/21371')
 #     Journal/17730
 # Journal/20810
 # Journal/20814
