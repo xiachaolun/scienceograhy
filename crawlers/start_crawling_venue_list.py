@@ -31,8 +31,7 @@ def getVenueListWithRQ():
 
     for domain in xrange(1, 50):
         for venue_type in [3, 4]:
-            paras = (venue_type, domain)
-            q.enqueue_call(func=crawlAndSaveVenueList, args=(paras,), timeout=3600)
+            q.enqueue_call(func=crawlAndSaveVenueList, args=(venue_type, domain), timeout=3600)
 
     ci.disconnect()
 
