@@ -16,5 +16,6 @@ main_paper_with_reference = 'main_paper_with_reference'
 main_paper_with_abstract = 'main_paper_with_abstract'
 other_paper_with_abstract = 'other_paper_with_abstract'
 main_author_list = 'main_author_list'
+all_venue_with_info = 'all_venue_with_info'
 
 redis_server = 'tall2'

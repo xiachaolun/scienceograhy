@@ -27,6 +27,7 @@ def randomSleep():
 
 
 def hasNextPage(url):
+    # not always works
     html = pq(url)
     text = html('a').filter('.nextprev').filter(lambda i: 'Go to Next Page' in str(pq(this).attr('title'))).text()
     return text == 'Next'

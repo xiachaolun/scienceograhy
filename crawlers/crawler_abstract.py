@@ -93,3 +93,9 @@ def crawlOtherPaperAbstract(paper):
     interface = MongoDBInterface()
     interface.setCollection(other_paper_with_abstract)
     interface.saveDocument(paper)
+
+if __name__ == '__main__':
+    doc = {}
+    doc['_id'] = 298841
+    crawlOtherPaperAbstract(doc)
+    #crawlAbstractGivenPaperId(298841)
