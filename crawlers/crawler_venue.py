@@ -14,6 +14,7 @@ import re
 def _crawlVenueInfoGivenId(venue_id):
     # venue id: Conference/197
     url = 'http://academic.research.microsoft.com/%s/' % venue_id
+    print url
     html = pq(url)
     venue_card = html('div').filter('.conference-card')
     # print author_card
