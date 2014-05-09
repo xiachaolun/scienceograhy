@@ -32,9 +32,12 @@ def checkAbstract():
 def checkVenueInfo():
     ci = MongoDBInterface()
     ci.setCollection(all_venue_with_info)
+    abn = []
     for doc in ci.getAllDocuments():
         if 'publication_count_time_series' not in doc.keys():
-            print doc['_id']
+            abn.append(doc['_id'])
+
+    print len(abn)
 
 if __name__ == '__main__':
     checkVenueInfo()

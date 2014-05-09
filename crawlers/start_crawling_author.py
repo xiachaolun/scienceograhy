@@ -23,9 +23,6 @@ def getAuthorInfo():
 
     random.shuffle(ids)
 
-    redis_conn = Redis(redis_server)
-    q = Queue(connection=redis_conn)
-
     for id in ids:
         # if it is already in the db
         if ci.getOneDocument(condition={'_id': id}) is not None:
