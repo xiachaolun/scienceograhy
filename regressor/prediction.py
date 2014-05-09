@@ -24,6 +24,7 @@ def getAllMainPaper():
 
     all_paper_info = getAllPaperAbstractInfo({'meta.year':{'$lte':2009, '$gte':2000}})
 
+    paper_features = []
     for paper in res:
         citing_time_series = {}
         for year in xrange(2000, 2010):
@@ -37,8 +38,19 @@ def getAllMainPaper():
             citing_time_series[year].append(citing_paper['_id'])
 
         paper['citing_paper_time_series'] = citing_time_series
-        pprint(paper)
-        break
+
+        ts = []
+        ts.append(paper['_id'])
+        sum = 0
+        for year in xrange(2000, 2010):
+            year_citation_count = len(paper['citing_paper_time_series'][year])
+            ts.append(year_citation_count)
+            sum += year_citation_count
+        ts.append(sum)
+        paper_features.append(ts)
+        # pprint(paper)
+        # break
+    return ts
 
 
 
