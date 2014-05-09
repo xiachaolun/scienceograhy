@@ -38,6 +38,8 @@ def checkVenueInfo():
             abn.append(doc['_id'])
 
     print len(abn)
+    for id in abn:
+        print id
 
 if __name__ == '__main__':
     checkVenueInfo()
