@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
 from utility.config import all_venue_with_info
-from utility.tool import randomSleep, prepcessCitingSentence, parseTimeSeriesData, hasInternalError
+from utility.tool import randomSleep, prepcessCitingSentence, parseTimeSeriesData
 
 from pprint import pprint
 
@@ -15,11 +15,12 @@ def _crawlVenueInfoGivenId(venue_id):
     # venue id: Conference/197
     url = 'http://academic.research.microsoft.com/%s/' % venue_id
     print url
-    if hasInternalError(url):
+    html = pq(url)
+
+    if html('span').filter('.error-title').text() == 'Internal Error':
         print 'bad url'
         return None
 
-    html = pq(url)
     venue_card = html('div').filter('.conference-card')
     # print author_card
     venue_name = venue_card('div').filter('.card-title')('span').filter(lambda i: '_name' in str(pq(this).attr('id'))).text()
@@ -77,4 +78,8 @@ def crawlAndSaveVenueInfo(venue_id):
     ai.disconnect()
 
 if __name__ == '__main__':
-    pprint(_crawlVenueInfoGivenId('Journal/17788'))
+    pprint(crawlAndSaveVenueInfo('Journal/20810'))
+#     Journal/17730
+# Journal/20810
+# Journal/20814
+# Journal/22155

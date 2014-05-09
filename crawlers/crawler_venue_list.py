@@ -11,8 +11,7 @@ from pprint import pprint
 
 import re
 
-def _hasNextPage(url):
-    html = pq(url)
+def _hasNextPage(html):
     #print html('div').filter('.rankList-pageNav-container')('a').attr('title')
     res = html('div').filter('.rankList-pageNav-container')('a')\
         .filter(lambda i: 'Go to next page' in str(pq(this).attr('title')))
@@ -22,6 +21,7 @@ def _hasNextPage(url):
 def crawlVenueListGivenUrl(url):
     html = pq(url)
     res = []
+    has_next_page =  _hasNextPage(html)
     for row in html('table').filter('.staticTable')('tbody')('tr').items():
         tmp = row('a').attr('href').strip(' /').split('/')
         venue_id = tmp[0] + '/' + tmp[1]
@@ -31,7 +31,7 @@ def crawlVenueListGivenUrl(url):
         res.append(venue_info)
 
     randomSleep()
-    return res
+    return res, has_next_page
 
 def crawlVenueListGivenDomain(venue_type, domain_id):
     # 3 indicates Conference and 4 for Journal
@@ -46,9 +46,9 @@ def crawlVenueListGivenDomain(venue_type, domain_id):
           % (venue_type_id, domain_id, start, end)
 
         print url
-        res_segment = crawlVenueListGivenUrl(url)
+        res_segment, has_next_page = crawlVenueListGivenUrl(url)
         res += res_segment
-        if _hasNextPage(url):
+        if has_next_page:
             start += 100
             end += 100
         else:
@@ -60,7 +60,6 @@ def crawlVenueListGivenDomain(venue_type, domain_id):
         res[i]['total_venue_in_field'] = n
         res[i]['field_ranking_percentile'] = round((i + 1) * 100.0 / n, 2)
         res[i]['domain'] = domain_id
-        res[i]['venue_type'] = venue_type
 
     return res
 

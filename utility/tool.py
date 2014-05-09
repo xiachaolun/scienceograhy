@@ -26,9 +26,8 @@ def randomSleep():
     time.sleep(sec)
 
 
-def hasNextPage(url):
+def hasNextPage(html):
     # not always works
-    html = pq(url)
     text = html('a').filter('.nextprev').filter(lambda i: 'Go to Next Page' in str(pq(this).attr('title'))).text()
     return text == 'Next'
     #<a id="ctl00_MainContent_ObjectList_Next" title="Go to Next Page" class="nextprev"
@@ -50,8 +49,3 @@ def parseTimeSeriesData(time_series):
             last_year = year
             last_value = value
     return res
-
-def hasInternalError(url):
-    hmtl = pq(url)
-    return hmtl('span').filter('.error-title').text() == 'Internal Error'
-    # <span id="ctl00_MainContent_lblTitle" class="error-title">Internal Error</span>

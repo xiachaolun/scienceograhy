@@ -13,16 +13,16 @@ import re
 
 def _crawlPaperGivenUrl(url):
     # this method is equivalent to crawlReferenceGivenUrl
-    hmtl = pq(url)
-
+    html = pq(url)
+    has_next_page = hasNextPage(html)
     #print hmtl
     ids = set()
-    for item in hmtl('li').filter('.paper-item').items():
+    for item in html('li').filter('.paper-item').items():
         href = item('a').filter(lambda i: '_Title' in str(pq(this).attr('id'))).attr('href')
         citing_paper_id = int(href.split('/')[1])
         ids.add(citing_paper_id)
 
-    return ids
+    return ids, has_next_page
 
 def _crawlAuthorPublication(author_id):
     start = 1
@@ -32,11 +32,11 @@ def _crawlAuthorPublication(author_id):
         publication_url = 'http://academic.research.microsoft.com/' \
                           'Detail?entitytype=2&searchtype=2&id=%d&start=%d&end=%d' % (author_id, start, end)
         print publication_url
-        ids = _crawlPaperGivenUrl(publication_url)
+        ids, has_next_page = _crawlPaperGivenUrl(publication_url)
         for id in ids:
             all_ids.add(id)
         randomSleep()
-        if hasNextPage(publication_url):
+        if has_next_page:
             start += 100
             end += 100
         else:
