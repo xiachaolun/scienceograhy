@@ -66,6 +66,10 @@ def crawlAndSaveVenueInfo(venue_id):
     ai.setCollection(all_venue_with_info)
     old_venue = ai.getOneDocument({'_id':venue_id})
 
+    # already crawled
+    if 'publication_count_time_series' in old_venue.keys():
+        return
+
     new_venue = _crawlVenueInfoGivenId(venue_id)
     if new_venue is None:
         return

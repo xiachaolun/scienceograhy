@@ -10,7 +10,7 @@ from rq import Queue
 
 import random
 
-from crawler_venue import crawlAndSaveVenueInfo
+from crawler_venue_info import crawlAndSaveVenueInfo
 
 def getVenueInfo():
 

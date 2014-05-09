@@ -67,6 +67,8 @@ def crawlVenueListGivenDomain(venue_type, domain_id, order_by):
     return res
 
 def crawlAndSaveVenueList(venue_type, domain_id):
+    # here is a little tricky. Microsoft Academic Search (MAS) provides two rankings for
+    # all venues in each domain. We have to crawl them one by one
     res_citation = crawlVenueListGivenDomain(venue_type, domain_id, 'total_citation_count')
     res_rating = crawlVenueListGivenDomain(venue_type, domain_id, 'field_rating')
 
