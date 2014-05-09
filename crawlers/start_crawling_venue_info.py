@@ -37,7 +37,7 @@ def getVenueInfoWithRQ():
     q = Queue(connection=redis_conn)
 
     for venue_id in ids:
-        q.enqueue_call(func=crawlAndSaveVenueInfo, args=(venue_id), timeout=3600)
+        q.enqueue_call(func=crawlAndSaveVenueInfo, args=(venue_id,), timeout=3600)
 
     ci.disconnect()
 
