@@ -29,7 +29,7 @@ def getAllMainPaper():
         for year in xrange(2000, 2010):
             citing_time_series[year] = []
 
-        for citing_paper_id in paper['citing_paper']:
+        for citing_paper_id in paper['citing_papers']:
             citing_paper = all_paper_info[citing_paper_id]
             year = citing_paper['year']
             citing_time_series[year].append(citing_paper['_id'])
