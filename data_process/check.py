@@ -29,7 +29,14 @@ def checkAbstract():
         if ci.getOneDocument({'_id':id}) is None:
             print id
 
+def checkVenueInfo():
+    ci = MongoDBInterface()
+    ci.setCollection(all_venue_with_info)
+    for doc in ci.getAllDocuments():
+        if 'publication_count_time_series' not in doc.keys():
+            print doc['_id']
+
 if __name__ == '__main__':
-    checkAbstract()
+    checkVenueInfo()
     # checkCitation()
     # checkContext()

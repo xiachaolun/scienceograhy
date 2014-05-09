@@ -56,16 +56,19 @@ def _crawlVenueInfoGivenId(venue_id):
     return venue_info
 
 def crawlAndSaveVenueInfo(venue_id):
-    venue_info = _crawlVenueInfoGivenId(venue_id)
 
     ai = MongoDBInterface()
     ai.setCollection(all_venue_with_info)
     old_venue = ai.getOneDocument({'_id':venue_id})
     assert old_venue is not None
+    if 'publication_count_time_series' in old_venue.keys():
+        return
+
+    venue_info = _crawlVenueInfoGivenId(venue_id)
     new_venue = dict(old_venue.items() + venue_info.items())
     ai.saveDocument(new_venue)
 
     ai.disconnect()
 
 if __name__ == '__main__':
-    pprint(_crawlVenueInfoGivenId('Conference/838'))
+    pprint(_crawlVenueInfoGivenId('Journal/17788'))

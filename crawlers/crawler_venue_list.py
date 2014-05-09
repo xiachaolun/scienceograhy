@@ -35,7 +35,8 @@ def crawlVenueListGivenUrl(url):
 
 def crawlVenueListGivenDomain(venue_type, domain_id):
     # 3 indicates Conference and 4 for Journal
-    assert venue_type in [3, 4]
+    assert venue_type in ['Conference', 'Journal']
+    venue_type_id = 3 if venue_type == 'Conference' else 4
     start = 1
     end = 100
     res = []
@@ -58,6 +59,8 @@ def crawlVenueListGivenDomain(venue_type, domain_id):
         res[i]['field_ranking'] = i + 1
         res[i]['total_venue_in_field'] = n
         res[i]['field_ranking_percentile'] = round((i + 1) * 100.0 / n, 2)
+        res[i]['domain'] = domain_id
+        res[i]['venue_type'] = venue_type
 
     return res
 

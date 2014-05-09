@@ -30,7 +30,7 @@ def getVenueListWithRQ():
     q = Queue(connection=redis_conn)
 
     for domain in xrange(1, 50):
-        for venue_type in [3, 4]:
+        for venue_type in ['Conference', 'Journal']:
             q.enqueue_call(func=crawlAndSaveVenueList, args=(venue_type, domain), timeout=3600)
 
     ci.disconnect()
