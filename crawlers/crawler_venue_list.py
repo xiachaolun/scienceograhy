@@ -43,7 +43,7 @@ def crawlVenueListGivenDomain(venue_type, domain_id):
     while True:
         url = 'http://academic.research.microsoft.com/' \
           'RankList?entitytype=%d&topDomainID=%d&subDomainID=0&last=0&start=%d&end=%d&orderBy=6' \
-          % (venue_type, domain_id, start, end)
+          % (venue_type_id, domain_id, start, end)
 
         print url
         res_segment = crawlVenueListGivenUrl(url)
@@ -75,7 +75,7 @@ def crawlAndSaveVenueList(venue_type, domain_id):
             mi.saveDocument(venue)
 
 if __name__ == '__main__':
-    res = crawlVenueListGivenDomain(4, 22)
+    res = crawlVenueListGivenDomain('Journal', 22)
     for venue in res:
         pprint(venue)
     # pprint(crawlVenueListGivenUrl('http://academic.research.microsoft.com/'
