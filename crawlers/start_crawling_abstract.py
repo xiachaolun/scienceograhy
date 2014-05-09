@@ -4,7 +4,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_paper_with_abstract, main_paper_list, other_paper_with_abstract, redis_server
+from utility.config import *
 from redis import Redis
 from rq import Queue
 
@@ -65,7 +65,7 @@ def getMainPaperAbstractWithRQ():
             continue
 
         paras = (doc)
-        q.enqueue_call(func=crawlMainPaperAbstract,args=(paras,),timeout=3600)
+        q.enqueue_call(func=crawlMainPaperAbstract,args=(paras,),timeout=time_out)
 
     ci.disconnect()
 

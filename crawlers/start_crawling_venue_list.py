@@ -4,7 +4,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import all_venue_with_info, redis_server
+from utility.config import *
 from redis import Redis
 from rq import Queue
 
@@ -31,7 +31,7 @@ def getVenueListWithRQ():
 
     for domain in xrange(1, 50):
         for venue_type in ['Conference', 'Journal']:
-            q.enqueue_call(func=crawlAndSaveVenueList, args=(venue_type, domain), timeout=3600)
+            q.enqueue_call(func=crawlAndSaveVenueList, args=(venue_type, domain), timeout=time_out)
 
     ci.disconnect()
 

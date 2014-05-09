@@ -4,7 +4,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_author_list, redis_server
+from utility.config import *
 from redis import Redis
 from rq import Queue
 
@@ -54,7 +54,7 @@ def getAuthorInfoWithRQ():
             print '%d is already there' % id
             continue
         paras = (id)
-        q.enqueue_call(func=crawlAndSaveAuthorInfo,args=(paras,),timeout=3600)
+        q.enqueue_call(func=crawlAndSaveAuthorInfo,args=(paras,),timeout=time_out)
 
     ci.disconnect()
 

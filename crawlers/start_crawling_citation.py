@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_paper_with_citation, main_paper_list, redis_server
+from utility.config import *
 from utility.tool import *
 
 import random
@@ -58,7 +58,7 @@ def crawlPaperCitationWithRQ():
             continue
 
         paras = (doc)
-        q.enqueue_call(func=crawlCitationPaper,args=(paras,),timeout=3600)
+        q.enqueue_call(func=crawlCitationPaper,args=(paras,),timeout=time_out)
 
     ci.disconnect()
 

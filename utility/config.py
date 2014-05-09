@@ -19,3 +19,5 @@ main_author_list = 'main_author_list'
 all_venue_with_info = 'all_venue_with_info'
 
 redis_server = 'tall2'
+
+time_out = 1000000

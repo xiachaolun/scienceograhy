@@ -59,7 +59,7 @@ def getReferenceWithRQ():
             continue
 
         paras = (doc)
-        q.enqueue_call(func=crawlReferencePaper,args=(paras,),timeout=3600)
+        q.enqueue_call(func=crawlReferencePaper,args=(paras,),timeout=time_out)
 
     ci.disconnect()
 
