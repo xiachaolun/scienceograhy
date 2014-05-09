@@ -15,9 +15,6 @@ def getVenueList():
     ci = MongoDBInterface()
     ci.setCollection(all_venue_with_info)
 
-    redis_conn = Redis(redis_server)
-    q = Queue(connection=redis_conn)
-
     for domain in xrange(1, 50):
         for venue_type in [3, 4]:
             crawlAndSaveVenueList(venue_type, domain)
@@ -35,7 +32,7 @@ def getVenueListWithRQ():
     for domain in xrange(1, 50):
         for venue_type in [3, 4]:
             paras = (venue_type, domain)
-            q.enqueue_call(func=crawlAndSaveVenueList,args=(paras,),timeout=3600)
+            q.enqueue_call(func=crawlAndSaveVenueList, args=(paras,), timeout=3600)
 
     ci.disconnect()
 
