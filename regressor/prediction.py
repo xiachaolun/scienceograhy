@@ -31,7 +31,7 @@ def getAllMainPaper():
 
         for citing_paper_id in paper['citing_papers']:
             citing_paper = all_paper_info[citing_paper_id]
-            year = citing_paper['year']
+            year = citing_paper['meta']['year']
             citing_time_series[year].append(citing_paper['_id'])
 
         paper['citing_paper_time_series'] = citing_time_series
