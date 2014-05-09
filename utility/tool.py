@@ -50,3 +50,8 @@ def parseTimeSeriesData(time_series):
             last_year = year
             last_value = value
     return res
+
+def hasInternalError(url):
+    hmtl = pq(url)
+    return hmtl('span').filter('.error-title').text() == 'Internal Error'
+    # <span id="ctl00_MainContent_lblTitle" class="error-title">Internal Error</span>
