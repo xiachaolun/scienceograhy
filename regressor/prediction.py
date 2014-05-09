@@ -22,7 +22,7 @@ def getAllMainPaper():
 
     res = [v for k, v in res.items()]
 
-    all_paper_info = getAllPaperAbstractInfo()
+    all_paper_info = getAllPaperAbstractInfo({'meta.year':{'$lte':2009, '$gte':2000}})
 
     for paper in res:
         citing_time_series = {}
@@ -32,6 +32,8 @@ def getAllMainPaper():
         for citing_paper_id in paper['citing_papers']:
             citing_paper = all_paper_info[citing_paper_id]
             year = citing_paper['meta']['year']
+            if year > 2009:
+                continue
             citing_time_series[year].append(citing_paper['_id'])
 
         paper['citing_paper_time_series'] = citing_time_series

@@ -76,7 +76,7 @@ def getAllVenueId():
     mi.disconnect()
     pprint(venue_ids)
 
-def getAllPaperAbstractInfo():
+def getAllPaperAbstractInfo(condition):
 
     res = {}
     mi = MongoDBInterface()
@@ -85,7 +85,7 @@ def getAllPaperAbstractInfo():
     for paper in mi.getAllDocuments():
         res[paper['_id']] = paper
     mi.setCollection(other_paper_with_abstract)
-    for paper in mi.getAllDocuments():
+    for paper in mi.getAllDocuments(condition):
         res[paper['_id']] = paper
 
     return res
