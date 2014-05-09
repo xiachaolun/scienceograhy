@@ -65,14 +65,11 @@ def crawlAndSaveVenueInfo(venue_id):
     ai = MongoDBInterface()
     ai.setCollection(all_venue_with_info)
     old_venue = ai.getOneDocument({'_id':venue_id})
-    assert old_venue is not None
-    if 'publication_count_time_series' in old_venue.keys():
-        return
 
-    venue_info = _crawlVenueInfoGivenId(venue_id)
-    if venue_info is None:
+    new_venue = _crawlVenueInfoGivenId(venue_id)
+    if new_venue is None:
         return
-    new_venue = dict(old_venue.items() + venue_info.items())
+    new_venue = dict(old_venue.items() + new_venue.items())
     ai.saveDocument(new_venue)
 
     ai.disconnect()

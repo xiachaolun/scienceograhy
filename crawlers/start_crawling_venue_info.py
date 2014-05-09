@@ -18,8 +18,9 @@ def getVenueInfo():
     ci.setCollection(all_venue_with_info)
 
     ids = []
-    for doc in ci.getAllDocuments(fields_to_select=['_id']):
-        ids.append(doc['_id'])
+    for doc in ci.getAllDocuments(fields_to_select=['_id', 'publication_count_time_series']):
+        if 'publication_count_time_series' not in doc.keys():
+            ids.append(doc['_id'])
 
     random.shuffle(ids)
 
@@ -34,8 +35,9 @@ def getVenueInfoWithRQ():
     ci.setCollection(all_venue_with_info)
 
     ids = []
-    for doc in ci.getAllDocuments(fields_to_select=['_id']):
-        ids.append(doc['_id'])
+    for doc in ci.getAllDocuments(fields_to_select=['_id', 'publication_count_time_series']):
+        if 'publication_count_time_series' not in doc.keys():
+            ids.append(doc['_id'])
 
     random.shuffle(ids)
 
