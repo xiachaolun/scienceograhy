@@ -4,8 +4,8 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utility.mongodb_interface import MongoDBInterface
-from utility.config import main_author_list
-from utility.tool import hasNextPage, randomSleep, prepcessCitingSentence, parseTimeSeriesData
+from utility.config import all_venue_with_info
+from utility.tool import randomSleep, prepcessCitingSentence, parseTimeSeriesData
 
 from pprint import pprint
 
@@ -54,12 +54,16 @@ def _crawlVenueInfoGivenId(venue_id):
 
     return venue_info
 
-def crawlAndSaveVenueInfo(author_id):
-    author_info = _crawlVenueInfoGivenId(author_id)
+def crawlAndSaveVenueInfo(venue_id):
+    venue_info = _crawlVenueInfoGivenId(venue_id)
 
     ai = MongoDBInterface()
-    ai.setCollection(main_author_list)
-    ai.saveDocument(author_info)
+    ai.setCollection(all_venue_with_info)
+    old_venue = ai.getOneDocument({'_id':venue_id})
+    assert old_venue is not None
+    new_venue = dict(old_venue.items() + venue_info.items())
+    ai.saveDocument(new_venue)
+
     ai.disconnect()
 
 if __name__ == '__main__':
