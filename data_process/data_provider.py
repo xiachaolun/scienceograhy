@@ -82,7 +82,7 @@ def getAllPaperAbstractInfo(condition):
     mi = MongoDBInterface()
 
     mi.setCollection(main_paper_with_abstract)
-    for paper in mi.getAllDocuments():
+    for paper in mi.getAllDocuments(condition):
         res[paper['_id']] = paper
     mi.setCollection(other_paper_with_abstract)
     for paper in mi.getAllDocuments(condition):
