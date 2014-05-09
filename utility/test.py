@@ -1,7 +1,7 @@
 import psutil
 
 
-cmdline = '/grad/users/cx28/scienceograhy/'
+cmdline = 'run_worker.py'
 
 cnt = 0
 for proc in psutil.process_iter():
