@@ -21,8 +21,26 @@ def getAllMainPaper():
         res[paper['_id']] = dict(res[paper['_id']].items() + paper.items())
 
     res = [v for k, v in res.items()]
-    pprint(res[0])
+
+    all_paper_info = getAllPaperAbstractInfo()
+
+    for paper in res:
+        citing_time_series = {}
+        for year in xrange(2000, 2010):
+            citing_time_series[year] = []
+
+        for citing_paper_id in paper['citing_paper']:
+            citing_paper = all_paper_info[citing_paper_id]
+            year = citing_paper['year']
+            citing_time_series[year].append(citing_paper['_id'])
+
+        paper['citing_paper_time_series'] = citing_time_series
+        pprint(paper)
+        break
+
+
 
 
 if __name__ == '__main__':
-    print len(getAllPaperAbstractInfo())
+    #print len(getAllPaperAbstractInfo())
+    getAllMainPaper()
