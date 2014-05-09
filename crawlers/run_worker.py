@@ -26,6 +26,10 @@ def startWorker():
     with Connection(connection=redis_conn):
         q = Queue()
         Worker(q).work()
+
 if __name__ == '__main__':
     if checkStatus():
+        print "there is no worker, start a new one"
         startWorker()
+    else:
+        print 'already has a worker'
