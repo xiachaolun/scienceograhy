@@ -50,7 +50,7 @@ def getAllMainPaper():
         ts.append(sum)
 
         for v in ts:
-            print v,
+            print v, ',',
         print
 
         paper_features.append(ts)
