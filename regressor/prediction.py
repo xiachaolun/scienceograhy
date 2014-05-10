@@ -48,7 +48,11 @@ def getAllMainPaper():
             ts.append(year_citation_count)
             sum += year_citation_count
         ts.append(sum)
-        print ts
+
+        for v in ts:
+            print v,
+        print
+
         paper_features.append(ts)
         # pprint(paper)
         # break
