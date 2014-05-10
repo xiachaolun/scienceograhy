@@ -26,7 +26,7 @@ def getAllMainPaper():
 
     paper_features = []
     for paper in res:
-        print paper['_id']
+        # print paper['_id']
         citing_time_series = {}
         for year in xrange(2000, 2010):
             citing_time_series[year] = []
