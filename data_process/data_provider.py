@@ -91,7 +91,15 @@ def getAllPaperAbstractInfo(condition):
     return res
 
 def getAllVenueInfo():
-    pass
+    mi = MongoDBInterface()
+    mi.setCollection(all_venue_with_info)
+
+    venues = {}
+    for venue in mi.getAllDocuments():
+        tmp = {}
+        tmp['_id'] = venue['_id']
+        tmp['isComputerScience'] = venue['domain'] == 3
+        tmp['ranking_percentile'] = venue['field_ranking_percentile']
 
 if __name__ == '__main__':
     getAllVenueId()

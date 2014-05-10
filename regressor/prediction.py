@@ -26,6 +26,7 @@ def getAllMainPaper():
 
     paper_features = []
     for paper in res:
+        print paper['_id']
         citing_time_series = {}
         for year in xrange(2000, 2010):
             citing_time_series[year] = []
@@ -47,10 +48,11 @@ def getAllMainPaper():
             ts.append(year_citation_count)
             sum += year_citation_count
         ts.append(sum)
+        print ts
         paper_features.append(ts)
         # pprint(paper)
         # break
-    return ts
+    return paper_features
 
 
 
