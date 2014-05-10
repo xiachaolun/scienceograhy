@@ -32,9 +32,9 @@ def getAllMainPaper():
             citing_time_series[year] = []
 
         for citing_paper_id in paper['citing_papers']:
-            if citing_paper_id not in all_paper_info.keys():
+            citing_paper = all_paper_info.get(citing_paper_id, None)
+            if citing_paper is None:
                 continue
-            citing_paper = all_paper_info[citing_paper_id]
             year = citing_paper['meta']['year']
             citing_time_series[year].append(citing_paper['_id'])
 
