@@ -53,6 +53,7 @@ class FeatureExtractor(object):
             paper['citing_paper_time_series'] = citing_time_series
 
     def _computeCitingFeature(self):
+        self._computeCitingPaperTimeSeries()
 
         # citation count ts
         paper_features = {}
