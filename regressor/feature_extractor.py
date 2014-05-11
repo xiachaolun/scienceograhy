@@ -128,7 +128,7 @@ class FeatureExtractor(object):
             tire_1_percentage = tire_1_count/ inside_cs_count
             tire_2_count = tire_2_count # leave it as a feature
             tire_2_percentage = tire_2_count / inside_cs_count
-            average_ranking_percentile = cs_accumulated_ranking_percentile / inside_cs_count
+            cs_average_ranking_percentile = cs_accumulated_ranking_percentile / inside_cs_count
             journal_count_percentage = journal_count / inside_cs_count
 
             venue_feature = {}
@@ -137,7 +137,7 @@ class FeatureExtractor(object):
             venue_feature['tire_1_percentage'] = tire_1_percentage
             venue_feature['tire_2_count'] = tire_2_count
             venue_feature['tire_2_percentage'] = tire_2_percentage
-            venue_feature['average_ranking_percentile'] = average_ranking_percentile
+            venue_feature['cs_average_ranking_percentile'] = cs_average_ranking_percentile
             venue_feature['journal_count_percentage'] = journal_count_percentage
             venue_feature['non_cs_average_ranking_percentile'] = non_cs_average_ranking_percentile
 
