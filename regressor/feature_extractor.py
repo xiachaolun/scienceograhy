@@ -98,7 +98,7 @@ class FeatureExtractor(object):
                         print citing_paper['_id'], venue_id
                         continue
 
-                    if venue['domain'] == 3:
+                    if venue['domain'] == 2:
                         # is from cs
                         inside_cs_count += 1
                         if type == 'Journal':
