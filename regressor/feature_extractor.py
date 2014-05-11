@@ -149,10 +149,8 @@ class FeatureExtractor(object):
         return self._computeCitingFeature()
 
 
-
-
 if __name__ == '__main__':
     fe = FeatureExtractor()
     features = fe.extractFeatures()
-    for id, feature in features:
+    for id, feature in features.items():
         pprint(feature)
