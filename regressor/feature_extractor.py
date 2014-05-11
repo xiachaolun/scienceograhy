@@ -54,10 +54,10 @@ class FeatureExtractor(object):
 
     def _computeCitingFeature(self):
 
+        # citation count ts
         paper_features = {}
         for paper in self.main_paper:
             ts = []
-            paper = paper_features[paper['_id']]
             sum = 0
             for year in xrange(2000, 2010):
                 year_citation_count = len(paper['citing_paper_time_series'][year])
@@ -66,6 +66,7 @@ class FeatureExtractor(object):
             ts.append(sum)
             paper_features[paper['_id']] = ts
 
+        #
         return paper_features
 
     def extractFeatures(self):
