@@ -109,7 +109,7 @@ class FeatureExtractor(object):
                         if venue['field_ranking_percentile'] <= tire_1[type]:
                             tire_1_count += 1
                         if venue['field_ranking_percentile'] <= tire_2[type]:
-                            tire_2_count += 2
+                            tire_2_count += 1
                     else:
                         outside_cs_count += 1
                         non_cs_accumulated_ranking_percentile += venue['field_ranking_percentile']
