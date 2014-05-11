@@ -87,7 +87,7 @@ class FeatureExtractor(object):
             conference_count = 0
             for year in xrange(2000, 2000 + k):
                 for citing_id in paper['citing_paper_time_series'][year]:
-                    citing_paper = self.all_paper_info.get['citing_id']
+                    citing_paper = self.all_paper_info['citing_id']
                     venue_id = citing_paper['meta']['venue_id']
                     type = citing_paper['meta']['venue_type']
                     venue = self.all_venue_info[venue_id]
