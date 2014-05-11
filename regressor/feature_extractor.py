@@ -119,6 +119,7 @@ class FeatureExtractor(object):
             # smoothing and make it a real number
             sum += 0.01
 
+            outside_cs_count += 0.01
             outside_cs_percentage = outside_cs_count / sum
             non_cs_average_ranking_percentile = non_cs_accumulated_ranking_percentile / outside_cs_count
 
