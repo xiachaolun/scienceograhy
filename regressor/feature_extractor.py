@@ -82,15 +82,22 @@ class FeatureExtractor(object):
             inside_cs_count = 0
             tire_1_count = 0
             tire_2_count = 0
-            accumulated_ranking_percentile = 0
+            cs_accumulated_ranking_percentile = 0
+            non_cs_accumulated_ranking_percentile = 0
             journal_count = 0 # within cs domain
             conference_count = 0
             for year in xrange(2000, 2000 + k):
                 for citing_id in paper['citing_paper_time_series'][year]:
-                    citing_paper = self.all_paper_info['citing_id']
+                    citing_paper = self.all_paper_info[citing_id]
                     venue_id = citing_paper['meta']['venue_id']
                     type = citing_paper['meta']['venue_type']
-                    venue = self.all_venue_info[venue_id]
+                    venue = self.all_venue_info.get(venue_id, None)
+
+                    #
+                    if venue is None:
+                        print citing_paper['_id'], venue_id
+                        continue
+
                     if venue['domain'] == 3:
                         # is from cs
                         inside_cs_count += 1
@@ -98,25 +105,29 @@ class FeatureExtractor(object):
                             journal_count += 1
                         else:
                             conference_count += 1
-                        accumulated_ranking_percentile += venue['field_ranking_percentile']
+                        cs_accumulated_ranking_percentile += venue['field_ranking_percentile']
                         if venue['field_ranking_percentile'] <= tire_1[type]:
                             tire_1_count += 1
                         if venue['field_ranking_percentile'] <= tire_2[type]:
                             tire_2_count += 2
                     else:
                         outside_cs_count += 1
+                        non_cs_accumulated_ranking_percentile += venue['field_ranking_percentile']
                     sum += 1
 
             # feature lsit
             # smoothing and make it a real number
             sum += 0.01
-            inside_cs_count += 0.01
+
             outside_cs_percentage = outside_cs_count / sum
+            non_cs_average_ranking_percentile = non_cs_accumulated_ranking_percentile / outside_cs_count
+
+            inside_cs_count += 0.01
             tire_1_count = tire_1_count # leave it as a feature
             tire_1_percentage = tire_1_count/ inside_cs_count
             tire_2_count = tire_2_count # leave it as a feature
             tire_2_percentage = tire_2_count / inside_cs_count
-            average_ranking_percentile = accumulated_ranking_percentile / inside_cs_count
+            average_ranking_percentile = cs_accumulated_ranking_percentile / inside_cs_count
             journal_count_percentage = journal_count / inside_cs_count
 
             venue_feature = {}
@@ -127,6 +138,7 @@ class FeatureExtractor(object):
             venue_feature['tire_2_percentage'] = tire_2_percentage
             venue_feature['average_ranking_percentile'] = average_ranking_percentile
             venue_feature['journal_count_percentage'] = journal_count_percentage
+            venue_feature['non_cs_average_ranking_percentile'] = non_cs_average_ranking_percentile
 
             paper_features[paper['_id']] = dict(paper_features[paper['_id']].items() + venue_feature.items())
 
@@ -140,4 +152,6 @@ class FeatureExtractor(object):
 
 if __name__ == '__main__':
     fe = FeatureExtractor()
-    print fe.extractFeatures()
+    features = fe.extractFeatures()
+    for feature in features:
+        pprint(feature)

@@ -95,7 +95,7 @@ def getAllVenueInfo():
     mi.setCollection(all_venue_with_info)
 
     venues = {}
-    for venue in mi.getAllDocuments(condition={'domain':3}):
+    for venue in mi.getAllDocuments():
         venues[venue['_id']] = venue
 
     return venues
