@@ -154,5 +154,5 @@ class FeatureExtractor(object):
 if __name__ == '__main__':
     fe = FeatureExtractor()
     features = fe.extractFeatures()
-    for feature in features:
+    for id, feature in features:
         pprint(feature)
