@@ -78,7 +78,7 @@ class FeatureExtractor(object):
                 year_citation_count = len(paper['citing_paper_time_series'][year])
                 ts_feature[str(year)]= year_citation_count
                 sum += year_citation_count
-            ts_feature['sum'] = sum
+            ts_feature['label'] = sum
             features[paper['_id']] = ts_feature
 
         # citing papers' venue. during first k years,
@@ -266,7 +266,13 @@ class FeatureExtractor(object):
         features = self.extractFeatures()
         featuren_names = features.iteritems().next()(1).keys()
 
-        print featuren_names
+        names = ['_id']
+        for name in featuren_names:
+            if name == 'label' or name == '_id':
+                continue
+            names.append(name)
+        names.append('label')
+        print names
 
         
 
