@@ -269,12 +269,19 @@ class FeatureExtractor(object):
             break
 
         names = ['_id']
-        for name in featuren_names:
+        for name in feature_names:
             if name == 'label' or name == '_id':
                 continue
             names.append(name)
         names.append('label')
         print names
+
+        # print '@relation \'citation\''
+        # for name in names:
+        #     if name == '_id':
+        #         pass
+        #     elif name == ''
+
 
         
 
