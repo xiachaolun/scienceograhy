@@ -254,11 +254,14 @@ class FeatureExtractor(object):
         return features
 
     def extractFeatures(self):
-        features = self._getCitingMetaFeature()
+        features = self._getAuthorFeature()
 
-    # features = dict(self._getAuthorFeature().items() +
-    #                 self._getPublishingVenueFeature().items() +
-    #                 self._getCitingMetaFeature().items())
+        for id, feature in self._getPublishingVenueFeature().items():
+            features[id] = dict(features[id].items() + feature.items())
+
+        for id, feature in self._getAuthorFeature().items():
+            features[id] = dict(features[id].items() + feature.items())
+
         return features
 
 if __name__ == '__main__':
