@@ -234,16 +234,23 @@ class FeatureExtractor(object):
     def _getPublishingVenueFeature(self):
         features = {}
         for k, paper in self.main_paper.items():
-            venue = self.all_venue_info[paper['meta']['venue_id']]
-            # emurate
-            venue_type = venue['venue_type']
-            venue_ranking_percentile = venue['field_ranking_percentile']
-            venue_average_citation = venue['total_citation_count'] * 1.0 / (venue['total_publication'] + 0.01)
-
             features[paper['_id']] = {}
+            venue_id = paper['meta']['venue_id']
+            if venue_id != -1:
+                venue = self.all_venue_info[venue_id]
+                # emurate
+                venue_type = venue['venue_type']
+                venue_ranking_percentile = venue['field_ranking_percentile']
+                venue_average_citation = venue['total_citation_count'] * 1.0 / (venue['total_publication'] + 0.01)
+            else:
+                venue_type = 'Unknown'
+                venue_ranking_percentile = 0
+                venue_average_citation = 0
+
             features[paper['_id']]['venue_type'] = venue_type
             features[paper['_id']]['venue_ranking_percentile'] = venue_ranking_percentile
             features[paper['_id']]['venue_average_citation'] = venue_average_citation
+
         return features
 
     def extractFeatures(self):
