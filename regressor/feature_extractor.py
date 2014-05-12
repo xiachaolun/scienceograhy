@@ -258,11 +258,8 @@ class FeatureExtractor(object):
 
         for id, feature in self._getPublishingVenueFeature().items():
             features[id] = dict(features[id].items() + feature.items())
-            pprint(features[id])
-            pprint(feature)
-            return
 
-        # for id, feature in self._getAuthorFeature().items():
+        for id, feature in self._getCitingMetaFeature().items():
             features[id] = dict(features[id].items() + feature.items())
 
         return features
