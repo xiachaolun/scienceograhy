@@ -77,7 +77,8 @@ class FeatureExtractor(object):
             sum = 0
             for year in xrange(2000, 2010):
                 year_citation_count = len(paper['citing_paper_time_series'][year])
-                ts_feature[str(year)]= year_citation_count
+                if year <= 1999 + self.k:
+                    ts_feature[str(year)]= year_citation_count
                 sum += year_citation_count
             ts_feature['label'] = sum
             features[paper['_id']] = ts_feature
@@ -275,7 +276,7 @@ class FeatureExtractor(object):
                 continue
             names.append(name)
         names = sorted(names)
-        names = ['_id'] + names + ['label']
+        names = names + ['label']
         # pprint(names)
 
         print '@relation \'citation\''
