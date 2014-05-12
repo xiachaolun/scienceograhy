@@ -187,7 +187,8 @@ class FeatureExtractor(object):
             accumulated_average_citation = 0
             accumulated_coauthor = 0
 
-            for author in paper['meta']['authors']:
+            for author_id in paper['meta']['authors']:
+                author = self.authors[author_id]
                 accumulated_publication += author['total_publication']
                 if author['total_publication'] > max_publication:
                     max_publication = author['total_publication']
