@@ -210,7 +210,7 @@ class FeatureExtractor(object):
             average_average_citation = accumulated_average_citation * 1.0 / len(paper['meta']['authors'])
             average_coauthor = accumulated_coauthor * 1.0 / len(paper['meta']['authors'])
 
-            features[paper['_id']] = paper['_id']
+            features[paper['_id']]['_id'] = paper['_id']
             features[paper['_id']]['max_publication'] = max_publication
             features[paper['_id']]['max_citation'] = max_citation
             features[paper['_id']]['max_average_citation'] = max_average_citation
