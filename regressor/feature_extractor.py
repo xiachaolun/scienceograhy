@@ -1,3 +1,4 @@
+
 import sys, os
 # add the utility library outside
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
@@ -11,12 +12,12 @@ from pprint import pprint
 
 
 class FeatureExtractor(object):
-    def __init__(self):
+    def __init__(self, k=3):
         self._retrieveAllMainPaper()
         self._retrieveAllCitingPaper()
         self._retrieveAllVenue()
         self._retrieveAllMainAuthor()
-        self.k = 1
+        self.k = k
 
     def _retrieveAllMainPaper(self):
         mi = MongoDBInterface()
@@ -311,5 +312,7 @@ class FeatureExtractor(object):
 
 
 if __name__ == '__main__':
+    k = sys.argv()[1]
+    print k
     fe = FeatureExtractor()
     fe.generateArff(False)
