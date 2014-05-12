@@ -16,7 +16,7 @@ class FeatureExtractor(object):
         self._retrieveAllCitingPaper()
         self._retrieveAllVenue()
         self._retrieveAllMainAuthor()
-        self.k = 3
+        self.k = 1
 
     def _retrieveAllMainPaper(self):
         mi = MongoDBInterface()
