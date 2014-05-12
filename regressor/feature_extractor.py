@@ -194,16 +194,16 @@ class FeatureExtractor(object):
                     max_publication = author['total_publication']
 
                 accumulated_citation += author['total_citation']
-                if author['total_publication'] > max_citation:
+                if author['total_citation'] > max_citation:
                     max_citation = author['total_citation']
 
                 accumulated_average_citation += author['average_citation']
-                if author['total_publication'] > max_average_citation:
+                if author['average_citation'] > max_average_citation:
                     max_average_citation = author['average_citation']
 
-                accumulated_coauthor += author['total_citation']
-                if author['total_publication'] > max_coauthor:
-                    max_coauthor = author['total_citation']
+                accumulated_coauthor += author['total_coauthor_count']
+                if author['total_coauthor_count'] > max_coauthor:
+                    max_coauthor = author['total_coauthor_count']
 
             n_author = len(paper['meta']['authors'])
 
