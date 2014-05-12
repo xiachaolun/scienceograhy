@@ -279,10 +279,13 @@ class FeatureExtractor(object):
 
         print '@relation \'citation\''
         for name in names:
+            print '@attribute %s' % name,
             if name == '_id':
-                pass
+                print 'integer'
             elif name == 'venue_type':
-                pass
+                print '{\'Journal\', \'Conference\', \'Unknown\'}'
+            else:
+                print 'real'
 
 
         
