@@ -205,14 +205,18 @@ class FeatureExtractor(object):
                 if author['total_publication'] > max_coauthor:
                     max_coauthor = author['total_citation']
 
-            try:
+            n_author = len(paper['meta']['authors'])
+
+            if n_author > 0:
                 average_publication = accumulated_publication * 1.0 / len(paper['meta']['authors'])
-            except:
-                pprint(paper)
-                return
-            average_citation = accumulated_citation * 1.0 / len(paper['meta']['authors'])
-            average_average_citation = accumulated_average_citation * 1.0 / len(paper['meta']['authors'])
-            average_coauthor = accumulated_coauthor * 1.0 / len(paper['meta']['authors'])
+                average_citation = accumulated_citation * 1.0 / len(paper['meta']['authors'])
+                average_average_citation = accumulated_average_citation * 1.0 / len(paper['meta']['authors'])
+                average_coauthor = accumulated_coauthor * 1.0 / len(paper['meta']['authors'])
+            else:
+                average_publication = 0
+                average_citation = 0
+                average_average_citation = 0
+                average_coauthor = 0
 
             features[paper['_id']] = {}
             features[paper['_id']]['_id'] = paper['_id']
@@ -236,6 +240,7 @@ class FeatureExtractor(object):
             venue_ranking_percentile = venue['field_ranking_percentile']
             venue_average_citation = venue['total_citation_count'] * 1.0 / (venue['total_publication'] + 0.01)
 
+            features[paper['_id']] = {}
             features[paper['_id']]['venue_type'] = venue_type
             features[paper['_id']]['venue_ranking_percentile'] = venue_ranking_percentile
             features[paper['_id']]['venue_average_citation'] = venue_average_citation
