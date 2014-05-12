@@ -268,19 +268,21 @@ class FeatureExtractor(object):
             feature_names = v.keys()
             break
 
-        names = ['_id']
+        names = []
         for name in feature_names:
             if name == 'label' or name == '_id':
                 continue
             names.append(name)
-        names.append('label')
-        print names
+        names = sorted(names)
+        names = ['_id'] + names + ['label']
+        pprint(names)
 
-        # print '@relation \'citation\''
-        # for name in names:
-        #     if name == '_id':
-        #         pass
-        #     elif name == ''
+        print '@relation \'citation\''
+        for name in names:
+            if name == '_id':
+                pass
+            elif name == 'venue_type':
+                pass
 
 
         
