@@ -234,7 +234,7 @@ class FeatureExtractor(object):
     def _getPublishingVenueFeature(self):
         features = {}
         for k, paper in self.main_paper.items():
-            features[paper['_id']] = {}
+            features[paper['_id']] = {'_id':paper['_id']}
             venue_id = paper['meta']['venue_id']
             if venue_id != -1:
                 venue = self.all_venue_info[venue_id]
