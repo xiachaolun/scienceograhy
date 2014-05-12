@@ -140,7 +140,7 @@ class FeatureExtractor(object):
             cs_average_ranking_percentile = cs_accumulated_ranking_percentile / inside_cs_count
             journal_count_percentage = journal_count / inside_cs_count
 
-            venue_feature = {}
+            venue_feature = {'_id':paper['_id']}
             venue_feature['outside_cs_percentage'] = outside_cs_percentage
             venue_feature['tire_1_count'] = tire_1_count
             venue_feature['tire_1_percentage'] = tire_1_percentage
