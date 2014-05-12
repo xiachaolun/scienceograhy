@@ -312,7 +312,6 @@ class FeatureExtractor(object):
 
 
 if __name__ == '__main__':
-    k = sys.argv[1]
-    print k
-    fe = FeatureExtractor()
+    k = int(sys.argv[1])
+    fe = FeatureExtractor(k)
     fe.generateArff(False)
