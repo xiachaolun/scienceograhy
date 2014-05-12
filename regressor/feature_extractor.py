@@ -264,7 +264,9 @@ class FeatureExtractor(object):
 
     def generateArff(self):
         features = self.extractFeatures()
-        featuren_names = features.iteritems().next()(1).keys()
+        for k, v in features.items():
+            feature_names = v.keys()
+            break
 
         names = ['_id']
         for name in featuren_names:
