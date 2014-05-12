@@ -51,7 +51,7 @@ class FeatureExtractor(object):
         # get all citing papers of main papers between 2000 and 2009
 
         for id in self.main_paper.keys():
-            paper = self.main_papers[id]
+            paper = self.main_paper[id]
             # print paper['_id']
 
             citing_time_series = {}
@@ -72,7 +72,7 @@ class FeatureExtractor(object):
 
         # citation count ts
         features = {}
-        for k, paper in self.main_papers.items():
+        for k, paper in self.main_paper.items():
             ts_feature = {}
             sum = 0
             for year in xrange(2000, 2010):
@@ -86,7 +86,7 @@ class FeatureExtractor(object):
         # how many citing papers are outside from computer science, and what is the percentage
         tire_1 = {'Journal': 5, 'Conference': 3} # top 70, since we have 3500 conference in CS
         tire_2 = {'Journal': 10, 'Conference': 6}
-        for k, paper in self.main_papers.items():
+        for k, paper in self.main_paper.items():
             sum = 0
             outside_cs_count = 0
             inside_cs_count = 0
@@ -177,7 +177,7 @@ class FeatureExtractor(object):
     def _getAuthorFeature(self):
         self._computeAuthorInfo()
         features = {}
-        for k, paper in self.main_papers.items():
+        for k, paper in self.main_paper.items():
             max_publication = -1
             max_citation = -1
             max_average_citation = -1
@@ -223,7 +223,7 @@ class FeatureExtractor(object):
 
     def _getPublishingVenueFeature(self):
         features = {}
-        for k, paper in self.main_papers.items():
+        for k, paper in self.main_paper.items():
             venue = self.all_venue_info[paper['meta']['venue_id']]
             # emurate
             venue_type = venue['venue_type']
