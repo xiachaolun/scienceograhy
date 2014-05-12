@@ -268,6 +268,8 @@ class FeatureExtractor(object):
 
         print featuren_names
 
+        
+
 if __name__ == '__main__':
     fe = FeatureExtractor()
     fe.generateArff()
