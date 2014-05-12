@@ -260,6 +260,7 @@ class FeatureExtractor(object):
             features[id] = dict(features[id].items() + feature.items())
             pprint(features[id])
             pprint(feature)
+            return
 
         # for id, feature in self._getAuthorFeature().items():
             features[id] = dict(features[id].items() + feature.items())
