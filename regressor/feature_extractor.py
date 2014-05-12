@@ -262,7 +262,7 @@ class FeatureExtractor(object):
 
         return features
 
-    def generateArff(self):
+    def generateArff(self, is_regression=True):
         feature_vectors = self.extractFeatures()
         for k, v in feature_vectors.items():
             feature_names = v.keys()
@@ -284,6 +284,11 @@ class FeatureExtractor(object):
                 print 'integer'
             elif name == 'venue_type':
                 print '{\'Journal\', \'Conference\', \'Unknown\'}'
+            elif name == 'label':
+                if is_regression:
+                    print 'real'
+                else:
+                    print '{-1, 1}'
             else:
                 print 'real'
         print
@@ -292,11 +297,19 @@ class FeatureExtractor(object):
             for name in names:
                 if name == '_id':
                     print feature_vector[name],
+                elif name == 'label':
+                    if is_regression:
+                        label = feature_vector[name]
+                    else:
+                        if feature_vector[name] < 200:
+                            label = -1
+                        else:
+                            label = 1
+                    print ',', label
                 else:
                     print ',', feature_vector[name],
-            print
 
 
 if __name__ == '__main__':
     fe = FeatureExtractor()
-    fe.generateArff()
+    fe.generateArff(False)
