@@ -288,7 +288,7 @@ class FeatureExtractor(object):
                 print 'real'
         print
         print '@data'
-        for k, feature_vector in feature_vectors:
+        for k, feature_vector in feature_vectors.items():
             for name in names:
                 if name == '_id':
                     print feature_vector[name],
