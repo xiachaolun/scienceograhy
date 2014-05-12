@@ -263,8 +263,8 @@ class FeatureExtractor(object):
         return features
 
     def generateArff(self):
-        features = self.extractFeatures()
-        for k, v in features.items():
+        feature_vectors = self.extractFeatures()
+        for k, v in feature_vectors.items():
             feature_names = v.keys()
             break
 
@@ -286,9 +286,16 @@ class FeatureExtractor(object):
                 print '{\'Journal\', \'Conference\', \'Unknown\'}'
             else:
                 print 'real'
+        print
+        print '@data'
+        for k, feature_vector in feature_vectors:
+            for name in names:
+                if name == '_id':
+                    print feature_vector[name],
+                else:
+                    print ',', feature_vector[name],
+            print
 
-
-        
 
 if __name__ == '__main__':
     fe = FeatureExtractor()
