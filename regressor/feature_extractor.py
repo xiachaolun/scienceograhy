@@ -52,7 +52,6 @@ class FeatureExtractor(object):
 
         for id in self.main_paper.keys():
             paper = self.main_paper[id]
-            # print paper['_id']
 
             citing_time_series = {}
             for year in xrange(2000, 2010):
@@ -104,7 +103,6 @@ class FeatureExtractor(object):
                     venue = self.all_venue_info.get(venue_id, None)
 
                     if venue is None:
-                        print citing_paper['_id'], venue_id
                         continue
 
                     if venue['domain'] == 2:
@@ -264,8 +262,12 @@ class FeatureExtractor(object):
 
         return features
 
+    def generateArff(self):
+        features = self.extractFeatures()
+        featuren_names = features.iteritems().next()
+
+        print featuren_names
+
 if __name__ == '__main__':
     fe = FeatureExtractor()
-    features = fe.extractFeatures()
-    for id, feature in features.items():
-        pprint(feature)
+    fe.generateArff()
