@@ -205,7 +205,11 @@ class FeatureExtractor(object):
                 if author['total_publication'] > max_coauthor:
                     max_coauthor = author['total_citation']
 
-            average_publication = accumulated_publication * 1.0 / len(paper['meta']['authors'])
+            try:
+                average_publication = accumulated_publication * 1.0 / len(paper['meta']['authors'])
+            except:
+                pprint(paper)
+                return
             average_citation = accumulated_citation * 1.0 / len(paper['meta']['authors'])
             average_average_citation = accumulated_average_citation * 1.0 / len(paper['meta']['authors'])
             average_coauthor = accumulated_coauthor * 1.0 / len(paper['meta']['authors'])
