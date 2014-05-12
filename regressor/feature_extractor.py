@@ -275,7 +275,7 @@ class FeatureExtractor(object):
             names.append(name)
         names = sorted(names)
         names = ['_id'] + names + ['label']
-        pprint(names)
+        # pprint(names)
 
         print '@relation \'citation\''
         for name in names:
