@@ -16,7 +16,7 @@ from utility.config import test_data
 def preprocess():
     fe = FeatureExtractor()
     fe._computeCitingPaperTimeSeries()
-    all_data = {}
+    all_data = []
     for id, t in fe.main_paper.items():
         ts = []
         normalized_ts = []
@@ -30,9 +30,12 @@ def preprocess():
             normalized_ts.append(ts[i] * 1.0 / sum)
 
         id = t['_id']
-        all_data[id] = {}
-        all_data[id]['ts'] = ts
-        all_data[id]['normalized_ts'] = normalized_ts
+        data = {}
+        data['_id'] = id
+        data['ts'] = ts
+        data['normalized_ts'] = normalized_ts
+
+        all_data.append(data)
 
     mi = MongoDBInterface()
     mi.setCollection(test_data)
