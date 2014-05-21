@@ -16,13 +16,25 @@ def getTS():
     fe = FeatureExtractor()
     fe._computeCitingPaperTimeSeries()
     all_ts = []
+    all_normalized_ts = []
     for id, t in fe.main_paper.items():
         ts = []
+        normalized_ts = []
+        sum = 0
         for year in xrange(2000, 2010):
-            ts.append(len(t['citing_paper_time_series'][year]))
+            count = len(t['citing_paper_time_series'][year])
+            sum += count
+            ts.append(count)
+
+        for i in xrange(len(ts)):
+            normalized_ts.append(ts[i] * 1.0 / count)
+
         all_ts.append(ts)
-        print ts
-    return all_ts
+        all_normalized_ts.append(normalized_ts)
+
+        print ts, normalized_ts
+
+    return all_ts, all_normalized_ts
 
 def plotAllTS():
     # Create an array of 100 linearly-spaced points from 0 to 2*pi
