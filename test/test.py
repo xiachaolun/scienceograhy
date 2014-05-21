@@ -31,7 +31,8 @@ def preprocess():
 
         for i in xrange(len(ts)):
             normalized_ts.append(ts[i] * 1.0 / sum)
-            accumulated_normalized_ts.append(normalized_ts[-1])
+            accumulated_normalized_ts.append(
+                normalized_ts[-1] + accumulated_normalized_ts[-1] if len(accumulated_normalized_ts) > 0 else 0)
 
         id = t['_id']
         data = {}
