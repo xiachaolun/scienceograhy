@@ -1,6 +1,6 @@
-#!/usr/bin/python
-
-# Numpy is a library for handling arrays (like data points)
+import sys, os
+# add the utility library outside
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import numpy as np
 
 # Pyplot is a module within the matplotlib library for plotting
