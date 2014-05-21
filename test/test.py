@@ -27,7 +27,7 @@ def getTS():
             ts.append(count)
 
         for i in xrange(len(ts)):
-            normalized_ts.append(ts[i] * 1.0 / count)
+            normalized_ts.append(ts[i] * 1.0 / sum)
 
         all_ts.append(ts)
         all_normalized_ts.append(normalized_ts)
