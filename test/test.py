@@ -14,8 +14,8 @@ from regressor.feature_extractor import FeatureExtractor
 
 def getTS():
     fe = FeatureExtractor()
-    res = fe.extractFeatures()
-    for t in res:
+    fe._computeCitingPaperTimeSeries()
+    for id, t in fe.main_paper.items():
         pprint(t)
     return
 
