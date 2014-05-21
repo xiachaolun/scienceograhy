@@ -10,13 +10,13 @@ import random
 from pprint import pprint
 
 from regressor.feature_extractor import FeatureExtractor
+from utility.mongodb_interface import MongoDBInterface
+from utility.config import test_data
 
-
-def getTS():
+def preprocess():
     fe = FeatureExtractor()
     fe._computeCitingPaperTimeSeries()
-    all_ts = []
-    all_normalized_ts = []
+    all_data = {}
     for id, t in fe.main_paper.items():
         ts = []
         normalized_ts = []
@@ -29,12 +29,20 @@ def getTS():
         for i in xrange(len(ts)):
             normalized_ts.append(ts[i] * 1.0 / sum)
 
-        all_ts.append(ts)
-        all_normalized_ts.append(normalized_ts)
+        id = t['_id']
+        all_data[id] = {}
+        all_data[id]['ts'] = ts
+        all_data[id]['normalized_ts'] = normalized_ts
 
-        print ts, normalized_ts
+    mi = MongoDBInterface()
+    mi.setCollection(test_data)
 
-    return all_ts, all_normalized_ts
+    for data in all_data:
+        mi.updateDocument(data)
+
+def getAllData():
+    pass
+
 
 def plotAllTS(all_ts, name):
     # Create an array of 100 linearly-spaced points from 0 to 2*pi
@@ -53,5 +61,7 @@ def plotAllTS(all_ts, name):
     #plt.show()
 
 if __name__ == '__main__':
-    all_ts, all_normalized = getTS()
+    preprocess()
+    all_data = getAllData()
     plotAllTS(all_ts, 'ts.png')
+    #plotAllTS(all_normalized, 'all_normalized.png')
