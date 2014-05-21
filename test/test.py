@@ -15,14 +15,18 @@ from regressor.feature_extractor import FeatureExtractor
 def getTS():
     fe = FeatureExtractor()
     fe._computeCitingPaperTimeSeries()
+    all_ts = []
     for id, t in fe.main_paper.items():
-        pprint(t)
-        break
-    return
+        ts = []
+        for year in xrange(2000, 2010):
+            ts.append(len(t['citing_paper_time_series'][year]))
+        all_ts.append(ts)
+        print ts
+    return all_ts
 
 def plotAllTS():
     # Create an array of 100 linearly-spaced points from 0 to 2*pi
-    years = range(1999, 2010)
+    years = range(2000, 2010)
     x = range(1, len(years) + 1)
 
     for k in xrange(10):
