@@ -36,22 +36,22 @@ def getTS():
 
     return all_ts, all_normalized_ts
 
-def plotAllTS():
+def plotAllTS(all_ts, name):
     # Create an array of 100 linearly-spaced points from 0 to 2*pi
     years = range(2000, 2010)
     x = range(1, len(years) + 1)
 
-    for k in xrange(10):
-        y = [random.randint(0, 100) for i in x]
-        plt.plot(x, y)
+    for ts in all_ts:
+        plt.plot(x, ts)
 
     plt.xticks(x, years)
 
     # Save the figure in a separate file
-    plt.savefig('sine_function_plain.png')
+    plt.savefig(name)
 
     # Draw the plot to the screen
-    plt.show()
+    #plt.show()
 
 if __name__ == '__main__':
-    getTS()
+    all_ts, all_normalized = getTS()
+    plotAllTS(all_ts, 'ts.png')
