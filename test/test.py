@@ -44,27 +44,34 @@ def preprocess():
         mi.updateDocument(data)
 
 def getAllData():
-    pass
+    mi = MongoDBInterface()
+    mi.setCollection(test_data)
+
+    all_data = []
+    for data in mi.getAllDocuments():
+        all_data.append(data)
+    return all_data
 
 
-def plotAllTS(all_ts, name):
+def plotAllTS(all_data, name):
     # Create an array of 100 linearly-spaced points from 0 to 2*pi
     years = range(2000, 2010)
     x = range(1, len(years) + 1)
 
-    for ts in all_ts:
-        plt.plot(x, ts)
+    for data in all_data:
+        plt.plot(x, data[name])
 
     plt.xticks(x, years)
 
     # Save the figure in a separate file
-    plt.savefig(name)
+    plt.savefig(name + '.png')
 
     # Draw the plot to the screen
     #plt.show()
 
 if __name__ == '__main__':
-    preprocess()
+    # preprocess()
     all_data = getAllData()
-    plotAllTS(all_ts, 'ts.png')
+    plotAllTS(all_data, 'ts')
+    plotAllTS(all_data, 'normalized_ts')
     #plotAllTS(all_normalized, 'all_normalized.png')
