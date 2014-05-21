@@ -54,12 +54,21 @@ def getAllData():
 
 
 def plotAllTS(all_data, name):
+    plt.cla()
     # Create an array of 100 linearly-spaced points from 0 to 2*pi
     years = range(2000, 2010)
     x = range(1, len(years) + 1)
 
     for data in all_data:
-        plt.plot(x, data[name])
+        sum = 0
+        for i in xrange(5):
+            sum += data['normalized_ts'][i]
+
+        if sum < 0.3 or sum > 0.7:
+        # if random.randint(0, 200) > -1:
+        #     continue
+            plt.plot(x, data[name])
+        # print data[name]
 
     plt.xticks(x, years)
 
