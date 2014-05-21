@@ -17,6 +17,7 @@ def getTS():
     fe._computeCitingPaperTimeSeries()
     for id, t in fe.main_paper.items():
         pprint(t)
+        break
     return
 
 def plotAllTS():
