@@ -77,7 +77,7 @@ class PaperListCrawler(object):
 
     def crawl(self):
         # valid_domains = [i for i in xrange(1, 25)]
-        valid_domains = [3]
+        valid_domains = [2] # 2 stands for compute science
         for domain in valid_domains:
             start = 1
             failed = 0
