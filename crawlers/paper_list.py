@@ -76,7 +76,8 @@ class PaperListCrawler(object):
         self.mongodb_interface.saveDocument(doc)
 
     def crawl(self):
-        valid_subdomains = [i for i in xrange(1, 25)]
+        # valid_subdomains = [i for i in xrange(1, 25)]
+        valid_subdomains = [0]
         for domain in valid_subdomains:
             start = 1
             failed = 0
