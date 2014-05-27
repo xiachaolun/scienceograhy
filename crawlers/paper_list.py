@@ -76,7 +76,9 @@ class PaperListCrawler(object):
         self.mongodb_interface.saveDocument(doc)
 
     def crawl(self):
-        for domain in xrange(1, 25):
+        # valid_domains = [i for i in xrange(1, 25)]
+        valid_domains = [3]
+        for domain in valid_domains:
             start = 1
             failed = 0
             print 'start crawling papers from domain %d' % domain
