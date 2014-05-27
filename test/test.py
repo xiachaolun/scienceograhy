@@ -4,6 +4,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import numpy as np
 
 # Pyplot is a module within the matplotlib library for plotting
+
+# from matplotlib import pyplot
 import matplotlib.pyplot as plt
 import random
 
@@ -79,11 +81,20 @@ def plotAllTS(all_data, name):
         # if random.randint(0, 200) > -1:
         #     continue
             plt.plot(x, data[name], label=str(data['_id']))
+            if sum > 0.9:
+                print data['_id']
         # print data[name]
 
     plt.xticks(x, years)
     plt.xlabel('Years')
-    plt.ylabel('Citation count' if name == 'ts' else 'Citation count proportion')
+
+    label_prefix = 'accumulated' if 'accumulated' in name else ''
+    label_suffix = 'citation count proportion' if 'normalized' in name else 'citation count'
+
+    plt.ylabel(label_prefix + ' ' + label_suffix)
+    plt.title('Papers (published in 1999) with >= 500 citations')
+
+    # plt.yscale('log')
     # plt.legend()
     # Save the figure in a separate file
     plt.savefig(name + '.png')
@@ -92,8 +103,10 @@ def plotAllTS(all_data, name):
     #plt.show()
 
 if __name__ == '__main__':
-    preprocess()
+    #preprocess()
     all_data = getAllData()
     plotAllTS(all_data, 'ts')
     plotAllTS(all_data, 'normalized_ts')
+    plotAllTS(all_data, 'accumulated_ts')
+    plotAllTS(all_data, 'accumulated_normalized_ts')
     #plotAllTS(all_normalized, 'all_normalized.png')

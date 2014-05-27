@@ -40,8 +40,8 @@ class PaperListCrawler(object):
 
             total_citation_count = item('td').filter('.staticOrderCol').text()
 
-            # here we ignore papers with less than 100 citations
-            if int(total_citation_count) < 100:
+            # here we ignore papers with less than 15 citations
+            if int(total_citation_count) < 15:
                 continue
 
             try:
