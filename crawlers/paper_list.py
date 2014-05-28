@@ -28,6 +28,7 @@ class PaperListCrawler(object):
             if is_first:
                 is_first = False
                 continue
+                # test
             title_year_info =  item('a')
             publication_url = title_year_info.attr('href')
             tmp = title_year_info.text().strip()
