@@ -20,12 +20,11 @@ from pprint import pprint
 #         doc['_id'] = int(id)
 #         interface.saveDocument(doc)
 
-def process2():
+def selectMainPapers():
     interface = MongoDBInterface()
     interface.setCollection(all_paper_list)
-    cur = interface.getAllDocuments(condition={'total_citation':{'$gte':100},
+    cur = interface.getAllDocuments(condition={'total_citation':{'$gte':15},
                                                'year':1999})
-
     interface2 = MongoDBInterface()
     interface2.setCollection(main_paper_list)
 
