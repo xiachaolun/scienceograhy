@@ -55,6 +55,7 @@ def crawlPaperCitationWithRQ():
 
     for doc in docs:
         if ci.getOneDocument(condition={'_id': doc['_id']}) is not None:
+            print 'paper %d is already there' % id
             continue
 
         paras = (doc)
