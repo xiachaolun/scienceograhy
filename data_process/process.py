@@ -42,4 +42,4 @@ def process():
         ci.updateDocument(doc)
 
 if __name__ == '__main__':
-    process()
+    selectMainPapers()
