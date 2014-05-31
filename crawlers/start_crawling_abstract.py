@@ -96,5 +96,5 @@ def getOtherPaperAbstractWithRQ():
     ci.disconnect()
 
 if __name__ == '__main__':
-    #getMainPaperAbstractWithRQ()
-    getOtherPaperAbstractWithRQ()
+    getMainPaperAbstractWithRQ()
+    #getOtherPaperAbstractWithRQ()
