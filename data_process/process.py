@@ -66,7 +66,7 @@ def mergeAllDataOfMainPaper():
             citing_time_series[year] = []
 
         missing_value = 0
-        for citing_paper_id in paper['citing_papers']:
+        for citing_paper_id in paper_with_all_info['citing_papers']:
             citing_paper = other_papers.get(citing_paper_id, None)
             if citing_paper is None:
                 missing_value += 1
@@ -74,7 +74,7 @@ def mergeAllDataOfMainPaper():
             year = citing_paper['meta']['year']
             citing_time_series[year].append(citing_paper['_id'])
 
-        paper['citing_paper_time_series'] = citing_time_series
+        paper_with_all_info['citing_paper_time_series'] = citing_time_series
         print '%lf\% citation is missing' % missing_value * 100.0 / len(paper_with_all_info['citing_sentences'])
 
         interface_all_info.saveDocument(paper_with_all_info)
