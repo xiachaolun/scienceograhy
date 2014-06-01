@@ -81,7 +81,6 @@ def mergeAllDataOfMainPaper():
 
         paper_with_all_info['citing_paper_time_series'] = citing_time_series
         paper_with_all_info['citing_paper_time_series_count'] = citing_time_series_count
-        print '%lf citation is missing' % (missing_value * 1.00 / len(paper_with_all_info['citing_papers']))
 
         # pprint(paper_with_all_info)
         interface_all_info.saveDocument(paper_with_all_info)
