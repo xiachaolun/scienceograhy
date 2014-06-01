@@ -76,7 +76,7 @@ def getAllVenueId():
     mi.disconnect()
     pprint(venue_ids)
 
-def getAllPaperAbstractInfo(condition):
+def getAllPaperAbstractInfo(condition={}):
 
     res = {}
     mi = MongoDBInterface()

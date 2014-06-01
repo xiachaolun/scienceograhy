@@ -48,7 +48,7 @@ def mergeAllDataOfMainPaper():
     interface_all_info = MongoDBInterface()
     interface_all_info.setCollection(main_paper_with_all_info)
 
-    other_papers = getAllPaperAbstractInfo()
+    other_papers = getAllPaperAbstractInfo({'meta.year':{'$lte':2009, '$gte':2000}})
 
     for paper in interface.getAllDocuments():
         context = interface_context.getOneDocument({'_id':paper['_id']})
