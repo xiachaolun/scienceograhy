@@ -1,6 +1,6 @@
 import os
 
-db_address = 'grande.rutgers.edu'
+db_address = 'USE YOUR OWN'
 db_port = 27017
 
 # db
